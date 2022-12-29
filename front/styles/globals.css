@@ -1,5 +1,4 @@
 @tailwind base;
 @tailwind components;
-@import url(_index.css);
 @tailwind utilities;
 @tailwind variants;
