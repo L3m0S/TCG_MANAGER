@@ -1,12 +1,17 @@
+import 'reflect-metadata'
 import express from 'express';
-import { UserRouter } from './entities/User/routes/routes';
+import 'express-async-errors'
+import { UserRouter } from "./main/User/routes/routes";
+import { AppDataSource } from './database/conection';
+import { errorHandler } from './middlewares/errorHandler';
+import { ensureAuthenticated } from './middlewares/ensureAuthenticated';
 
 const server =  express();
-
-server.use('/user', UserRouter);
 server.use(express.json());
-
-server.listen('3333', () => {
+server.use('/user', UserRouter);
+server.use(errorHandler);
+server.listen('3333', async () => {
+    await AppDataSource.initialize();
     console.log('Server is running on PORT: 3333...');
 });
 

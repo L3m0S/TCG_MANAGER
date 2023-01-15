@@ -1,6 +1,7 @@
-import { Request, response, Response } from "express";
+import { Request, Response } from "express";
+import { AuthenticateUserService } from "./AuthenticateUserService";
 
-class AuthenticateUserController {
+export class AuthenticateUserController {
 
     async authenticateUser(req: Request, res: Response) {
         const {email, password} = req.body;
@@ -9,6 +10,6 @@ class AuthenticateUserController {
 
         const token = await authenticateUserService.authenticateUser(email, password);
 
-        return response.json(token);
+        return res.json(token);
     }
 }
