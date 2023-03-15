@@ -1,5 +1,4 @@
 import  { Router } from "express";
-import { ensureAuthenticated } from "../../../middlewares/ensureAuthenticated";
 import { AuthenticateUserController } from "../AuthenticateUser/AuthenticateUserController";
 import { CreateUserController } from "../CreateUser/CreateUserController";
 
@@ -15,7 +14,6 @@ UserRouter.get(
 
 UserRouter.post(
     '/register',
-    ensureAuthenticated,
     createUserController.createUser
 )
 

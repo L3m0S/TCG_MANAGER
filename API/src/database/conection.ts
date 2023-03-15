@@ -6,9 +6,9 @@ export const AppDataSource = new DataSource({
     port: 5432,
     username: "postgres",
     password: "123teste",
-    database: 'TCG_MANAGER',
+    database: 'TCG_MANAGER1',
     synchronize: true,
-    logging: true,
+    logging: false,
     entities: [`${__dirname}/../entities/*.{ts,js}`],
     migrations: [`${__dirname}/migrations/*.{ts,js}`],
 })

@@ -1,5 +1,4 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Card } from "./Card.entity";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('users')
 export class User {
@@ -12,7 +11,7 @@ export class User {
     @UpdateDateColumn()
     updated_at: Date;
 
-    @Column({type: 'varchar', length: '200', nullable: true})
+    @Column({type: 'varchar', length: '200', nullable: false})
     name: string;
 
     @Column({type: 'varchar', length: '100' ,nullable: false})
@@ -20,7 +19,4 @@ export class User {
 
     @Column({type: 'varchar', nullable: false})
     password: string;
-
-    @OneToMany(() => Card, (card) => card.owner)
-    cards: Card[];
 }

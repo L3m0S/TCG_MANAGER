@@ -4,11 +4,14 @@ import 'express-async-errors'
 import { UserRouter } from "./main/User/routes/routes";
 import { AppDataSource } from './database/conection';
 import { errorHandler } from './middlewares/errorHandler';
-import { ensureAuthenticated } from './middlewares/ensureAuthenticated';
+import { DeckRouter } from './main/Deck/routes/routes';
+import { CardsRouter } from './main/Card/routes/routes';
 
 const server =  express();
 server.use(express.json());
 server.use('/user', UserRouter);
+server.use('/deck', DeckRouter);
+server.use('/cards', CardsRouter);
 server.use(errorHandler);
 server.listen('3333', async () => {
     await AppDataSource.initialize();

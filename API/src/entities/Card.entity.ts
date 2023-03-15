@@ -14,8 +14,4 @@ export class Card {
 
     @Column({type: 'varchar', length: '100', nullable: false})
     card_id: string;
-
-    @JoinColumn({name: 'owner_id'})
-    @ManyToOne(() => User, (user) => user.cards)    
-    owner: User;
 }
