@@ -1,14 +1,14 @@
 import  { Router } from "express";
 import { ensureAuthenticated } from "../../../middlewares/ensureAuthenticated";
-import { GetCardByIdController } from "../../Card/GetCardById/GetCardByIdController";
 import { AuthenticateUserController } from "../AuthenticateUser/AuthenticateUserController";
 import { CreateUserController } from "../CreateUser/CreateUserController";
+import { GetUserByIdController } from "../GetUserById/GetUserByIdController";
 
 const UserRouter = Router();
 
 const createUserController = new CreateUserController();
 const authenticateUser = new AuthenticateUserController();
-const getUserByIdCotroller = new GetCardByIdController();
+const getUserByIdCotroller = new GetUserByIdController();
 
 UserRouter.get(
     "/login",
@@ -22,7 +22,8 @@ UserRouter.post(
  
 UserRouter.get(
     "/:userId",
-    getUserByIdCotroller.getCardById
+    ensureAuthenticated,
+    getUserByIdCotroller.getUserById
 )
 
 export { UserRouter } 

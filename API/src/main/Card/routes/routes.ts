@@ -12,7 +12,6 @@ const getCardByIdController = new GetCardByIdController();
 
 CardsRouter.get(
     "/",
-    ensureAuthenticated,
     cardListController.getCardList
 )
 

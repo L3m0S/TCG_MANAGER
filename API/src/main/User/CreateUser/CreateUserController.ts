@@ -10,6 +10,6 @@ export class CreateUserController {
 
         const userCreated = await createUserService.createUser(email, password, name);
 
-        return res.json(userCreated);
+        return res.json(userCreated); 
     }
 }

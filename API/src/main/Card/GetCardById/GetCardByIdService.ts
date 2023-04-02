@@ -5,12 +5,13 @@ import { CardApiConfig } from "../card-api-config/card-api-config";
 
 export class GetCardByIdService {
     async getCardById(id: string) {
-        if (!id)
+        if (!id) {
             throw new ApiError('ID não valido!', 403);
-
+        }
+            
         const apiConfig = new CardApiConfig().getConfig();
 
-        let card;
+        let card; 
         try {
             card = (await axios.get(
                 `${apiConfig.url}/cards/${id}`
