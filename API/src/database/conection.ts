@@ -3,10 +3,10 @@ import { DataSource } from 'typeorm';
 export const AppDataSource = new DataSource({
     type: "postgres",
     host: "localhost",
-    port: 5432,
+    port: 5433,
     username: "postgres",
     password: "123teste",
-    database: 'TCG_MANAGER1',
+    database: 'TCG_MANAGER',
     synchronize: true,
     logging: false,
     entities: [`${__dirname}/../entities/*.{ts,js}`],

@@ -17,13 +17,11 @@ CardsRouter.get(
 
 CardsRouter.get(
     '/randomCard',
-    ensureAuthenticated,
     randomCardController.getRandomCard
 )
 
 CardsRouter.get(
     '/:id',
-    ensureAuthenticated,
     getCardByIdController.getCardById
 )
 

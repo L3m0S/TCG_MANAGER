@@ -16,6 +16,7 @@ const ensureAuthenticated = (req: Request, res: Response, next: NextFunction) =>
 
         req.body = {...req.body, user_id: subject.sub}
         
+        
         return next();
     } catch (err) {
         throw new ApiError(`Não autorizado!`, 401);

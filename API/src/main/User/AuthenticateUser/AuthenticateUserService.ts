@@ -12,8 +12,9 @@ export class AuthenticateUserService {
             throw new ApiError("Informe a senha para realizar o login!", 400);
 
         //buscar usuario no banco
-        const userExists = await UserRepository.findOneBy({email: email});
+        const userExists = await UserRepository.createQueryBuilder("user").select(["user.id", "user.email", "user.password"]).where("user.email = :email", {email}).getOne();
 
+        console.log(userExists)
         //se não encontrar o usuario no banco, retornar erro
         if (!userExists)
             throw new ApiError(`Usuário não encontrado!`, 404);

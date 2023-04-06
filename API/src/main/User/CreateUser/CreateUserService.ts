@@ -6,7 +6,7 @@ import { CreateUserRepository } from "./CreateUserRepository";
 
 export class CreateUserService {
 
-    async createUser(email: string, password: string, name: string): Promise<User> {
+    async createUser(email: string, password: string, name: string, user_name: string): Promise<User> {
         if (!email)
             throw new ApiError('Informe o email!', 400);
 
@@ -26,7 +26,8 @@ export class CreateUserService {
         const userCreated = await CreateUserRepository.save({
             email: email,
             password: encryptedPassword,
-            name: name
+            name: name,
+            user_name: user_name
         });
 
         return userCreated;

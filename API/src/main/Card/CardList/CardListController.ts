@@ -13,6 +13,6 @@ export class CardListController {
         const cardListService = new CardListService();
         const cardList = await cardListService.getCardList(+page, +pageSize, searchParams);
 
-        return res.json(cardList);
+        return res.json({data:cardList});
     }
 }
