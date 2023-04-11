@@ -6,9 +6,11 @@ import { AppDataSource } from './database/conection';
 import { errorHandler } from './middlewares/errorHandler';
 import { DeckRouter } from './main/Deck/routes/routes';
 import { CardsRouter } from './main/Card/routes/routes';
+import cors from 'cors';
 
-const server =  express();
+const server = express();
 server.use(express.json());
+server.use(cors());
 server.use('/user', UserRouter);
 server.use('/deck', DeckRouter);
 server.use('/cards', CardsRouter);

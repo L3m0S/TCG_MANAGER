@@ -10,6 +10,6 @@ export class GetCardByIdController {
 
         const card = await getCardByIdService.getCardById(id);
 
-        res.json(card);
+        res.json({ data: card });
     }
 }

@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { DeckImage } from "./DeckImage.entity";
+import { DeckCard } from "./DeckCard.entity";
 
 @Entity('decks')
 export class Deck {
@@ -12,9 +13,18 @@ export class Deck {
     @UpdateDateColumn()
     updated_at: Date;
 
-    @Column({type: 'varchar', length: '200', nullable: true})
+    @Column({ type: 'varchar', length: '200', nullable: true })
     name: string;
 
-    @OneToMany(() => DeckImage, (deckImage) => deckImage.deck)
-    images: DeckImage[]
+    @Column({ nullable: true })
+    description: string;
+
+    @Column({ nullable: true })
+    difficulty: number;
+
+    @Column()
+    cover_image_id: string;
+
+    @OneToMany(() => DeckCard, (deckCard) => deckCard.deck_id)
+    cards: DeckCard[];
 }

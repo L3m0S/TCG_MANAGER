@@ -9,6 +9,6 @@ export class RandomCardController {
 
         const randomCard = await randomCardService.getRandomCard();
 
-        return res.json(randomCard);
+        return res.json({ data: randomCard });
     };
 };

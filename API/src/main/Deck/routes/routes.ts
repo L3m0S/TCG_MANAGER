@@ -7,9 +7,9 @@ const DeckRouter = Router();
 const uploadDeckImageController = new UploadDeckImageController();
 
 DeckRouter.post(
-    "/upload-image", 
-    multer(multerConfig).single('deckImage'), 
+    "/upload-image",
+    multer(multerConfig).single('deckImage'),
     uploadDeckImageController.uploadImage
 )
 
-export {DeckRouter } 
+export { DeckRouter } 

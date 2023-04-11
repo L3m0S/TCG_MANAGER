@@ -8,4 +8,4 @@ const errorHandler = (error: Error & Partial<ApiError>, req: Request, res: Respo
     return res.status(statusCode).json({ message: errorMessage });
 }
 
-export  { errorHandler };
+export { errorHandler };

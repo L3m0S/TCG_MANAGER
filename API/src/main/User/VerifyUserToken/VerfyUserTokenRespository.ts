@@ -2,6 +2,6 @@ import { AppDataSource } from "../../../database/conection";
 import { User } from "../../../entities/User.entity";
 
 
-export const CreateUserRepository = AppDataSource.getRepository(User).extend({
+export const VerifyUserTokenRepository = AppDataSource.getRepository(User).extend({
 
 })

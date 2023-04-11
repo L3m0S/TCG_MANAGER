@@ -1,5 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { User } from "./User.entity";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('cards')
 export class Card {
@@ -12,6 +11,6 @@ export class Card {
     @UpdateDateColumn()
     updated_at: Date;
 
-    @Column({type: 'varchar', length: '100', nullable: false})
+    @Column({ type: 'varchar', length: '100', nullable: false })
     card_id: string;
 }

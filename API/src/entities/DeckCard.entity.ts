@@ -1,9 +1,8 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Deck } from "./Deck.entity";
-import { User } from "./User.entity";
 
-@Entity('deck_images')
-export class DeckImage {
+@Entity('deck_cards')
+export class DeckCard {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -13,7 +12,10 @@ export class DeckImage {
     @UpdateDateColumn()
     updated_at: Date;
 
+    @Column()
+    card_id: string;
+
     @JoinColumn({ name: 'deck_id' })
     @ManyToOne(() => Deck, (deck) => deck.cards)
-    owner: User;
+    deck_id: Deck;
 }

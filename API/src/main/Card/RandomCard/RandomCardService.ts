@@ -20,9 +20,9 @@ export class RandomCardService {
             )).data;
             randomCard = cardList.data[randomCardIndex];
         } catch (err: any) {
-            throw new ApiError(err.message, err.response?.status)
+            throw new ApiError(err.message, err.response?.status);
         }
-    
+
         return randomCard;
     }
 }

@@ -8,10 +8,10 @@ export class GetCardByIdService {
         if (!id) {
             throw new ApiError('ID não valido!', 403);
         }
-            
+
         const apiConfig = new CardApiConfig().getConfig();
 
-        let card; 
+        let card;
         try {
             card = (await axios.get(
                 `${apiConfig.url}/cards/${id}`
@@ -19,7 +19,7 @@ export class GetCardByIdService {
         } catch (err: any) {
             throw new ApiError(err.message, err.response?.status);
         };
-        
+
         return card;
     }
 }

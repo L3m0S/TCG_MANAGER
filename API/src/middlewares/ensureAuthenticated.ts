@@ -14,13 +14,13 @@ const ensureAuthenticated = (req: Request, res: Response, next: NextFunction) =>
     try {
         const subject = verify(token, 'teste');
 
-        req.body = {...req.body, user_id: subject.sub}
-        
+        req.body = { ...req.body, user_id: subject.sub }
+
         return next();
     } catch (err) {
         throw new ApiError(`Não autorizado!`, 401);
     }
-  
+
 }
 
 export { ensureAuthenticated }
