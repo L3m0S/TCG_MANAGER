@@ -12,19 +12,16 @@ const getCardByIdController = new GetCardByIdController();
 
 CardsRouter.get(
     "/",
-    ensureAuthenticated,
     cardListController.getCardList
 )
 
 CardsRouter.get(
     '/randomCard',
-    ensureAuthenticated,
     randomCardController.getRandomCard
 )
 
 CardsRouter.get(
     '/:id',
-    ensureAuthenticated,
     getCardByIdController.getCardById
 )
 
