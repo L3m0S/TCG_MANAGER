@@ -19,6 +19,7 @@ UserRouter.get(
 
 UserRouter.get(
     "/verifyUserToken",
+    ensureAuthenticated,
     verifyUserToken.verifyUserToken
 )
 
