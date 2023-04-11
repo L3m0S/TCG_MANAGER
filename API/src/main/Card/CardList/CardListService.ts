@@ -8,7 +8,7 @@ export class CardListService {
         const apiConfig = new CardApiConfig().getConfig();
 
         const filters = searchParams.length > 0 ? `q=${searchParams}` : '';
-        const queryParams = `?page${page}&pageSize=${pageSize}${filters}`;
+        const queryParams = `?page=${page}&pageSize=${pageSize}${filters}`;
 
         let cardList;
         try {
