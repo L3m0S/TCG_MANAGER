@@ -4,11 +4,12 @@ import { CardApiConfig } from "../card-api-config/card-api-config";
 
 export class CardListService {
 
-    async getCardList(page: number, pageSize: number, searchParams: string) {
+    async getCardList(page: number, pageSize: number, searchParams: string, orderByParams: string) {
         const apiConfig = new CardApiConfig().getConfig();
 
-        const filters = searchParams.length > 0 ? `q=${searchParams}` : '';
-        const queryParams = `?page=${page}&pageSize=${pageSize}${filters}`;
+        const filters = searchParams.length > 0 ? `&q=${searchParams}` : '';
+        const orderBy = orderByParams.length > 0 ? `&orderBy=${orderByParams}` : '';
+        const queryParams = `page=${page}&pageSize=${pageSize}${filters}${orderBy}`;
 
         let cardList;
         try {

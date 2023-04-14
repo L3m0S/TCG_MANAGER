@@ -1,6 +1,6 @@
-import { SetInterface } from "./Set.model";
+import { ISet } from "./Set.model";
 
-export interface CardInterface {
+export interface ICard {
     id: string,
     name: string,
     supertype: string,
@@ -32,7 +32,7 @@ export interface CardInterface {
     ],
     retreatCost: string[],
     convertedRetreatCost: number,
-    set: SetInterface,
+    set: ISet,
     number: string,
     artist: string,
     rarity: string,

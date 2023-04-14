@@ -8,10 +8,11 @@ export class CardListController {
 
         const page = req?.query?.page ?? 1;
         const pageSize = req?.query?.pageSize ?? 20;
-        const searchParams = `${req?.query?.searchParams}` ?? '';
+        const searchParams = req?.query?.searchParams ?? '';
+        const orderByParams = req?.query?.orderBy ?? '';
 
         const cardListService = new CardListService();
-        const cardList = await cardListService.getCardList(+page, +pageSize, searchParams);
+        const cardList = await cardListService.getCardList(+page, +pageSize, `${searchParams}`, `${orderByParams}`);
 
         return res.json({ data: cardList });
     }

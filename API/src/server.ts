@@ -10,6 +10,7 @@ import cors from 'cors';
 import { TypeRouter } from './main/PokemonType/routes/routes';
 import { SuperTypeRouter } from './main/PokemonSuperType/routes/routes';
 import { SubTypeRouter } from './main/PokemonSubType/PokemonSuperType/routes/routes';
+import { SetsRouter } from './main/Set/routes/routes';
 
 const server = express();
 server.use(express.json());
@@ -20,6 +21,7 @@ server.use('/cards', CardsRouter);
 server.use('/types', TypeRouter);
 server.use('/super-types', SuperTypeRouter);
 server.use('/sub-types', SubTypeRouter);
+server.use('/sets', SetsRouter)
 server.use(errorHandler);
 server.listen('3333', async () => {
     await AppDataSource.initialize();

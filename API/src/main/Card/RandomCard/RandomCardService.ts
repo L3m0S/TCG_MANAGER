@@ -1,11 +1,11 @@
 import axios from "axios";
 import { ApiError } from "../../../helpers/apiErrors";
 import { CardApiConfig } from "../card-api-config/card-api-config";
-import { CardInterface } from "../../../models/Card.model";
+import { ICard } from "../../../models/Card.model";
 
 export class RandomCardService {
 
-    async getRandomCard(): Promise<CardInterface> {
+    async getRandomCard(): Promise<ICard> {
 
         const apiConfig = new CardApiConfig().getConfig();
 
@@ -13,7 +13,7 @@ export class RandomCardService {
         const randomCardIndex = Math.floor(Math.random() * 49);
 
         let cardList;
-        let randomCard: CardInterface;
+        let randomCard: ICard;
 
         try {
             cardList = (await axios.get(

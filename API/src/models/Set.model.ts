@@ -1,4 +1,4 @@
-export interface SetInterface {
+export interface ISet {
     id: string,
     name: string,
     series: string,
