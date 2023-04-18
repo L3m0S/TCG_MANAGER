@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Deck } from "./Deck.entity";
 
 @Entity('users')
 export class User {
@@ -17,7 +18,7 @@ export class User {
     @Column({ type: 'varchar', length: '200', nullable: false })
     name: string;
 
-    @Column({ type: 'varchar', length: '100', nullable: false })
+    @Column({ type: 'varchar', length: '100', nullable: false, unique: true })
     email: string;
 
     @Column({ type: 'varchar', nullable: false, select: false })
@@ -25,5 +26,12 @@ export class User {
 
     @Column({ nullable: false, default: 0 })
     experience_level: number;
+
+    @Column({ nullable: false, default: false })
+    admin: boolean;
+
+    @OneToMany(() => Deck, deck => deck.user_id)
+    created_decks: Deck[];
+
 
 }
