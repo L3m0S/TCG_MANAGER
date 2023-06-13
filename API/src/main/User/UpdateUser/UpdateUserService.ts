@@ -43,13 +43,13 @@ export class UpdateUserService {
             throw new ApiError(`Não é possivel atualizar o status de administrador!`, 400);
         };
 
-        const emailAlreadyExist = await UpdateUserRepository.findOneBy({email: user.email, id: Not(user.id)});
+        const emailAlreadyExist = await UpdateUserRepository.findOneBy({ email: user.email, id: Not(user.id) });
 
         if (emailAlreadyExist) {
             throw new ApiError(`E-mail já utilizado!`, 400);
         };
 
-        const userNameAlreadyExist = await UpdateUserRepository.findOneBy({user_name: user.user_name, id: Not(user.id)});
+        const userNameAlreadyExist = await UpdateUserRepository.findOneBy({ user_name: user.user_name, id: Not(user.id) });
 
         if (userNameAlreadyExist) {
             throw new ApiError(`Nome de usuário já utilizado!`, 400);

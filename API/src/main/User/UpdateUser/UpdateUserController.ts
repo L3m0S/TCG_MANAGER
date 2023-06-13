@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { UpdateUserService } from "./UpdateUserService";
 
-export class UpdateUserController  {
+export class UpdateUserController {
 
     async updateUser(req: Request, res: Response) {
 
@@ -11,6 +11,6 @@ export class UpdateUserController  {
 
         const updatedUser = await updateUserService.updateUser(user, +user_id);
 
-        res.send({data: updatedUser});
+        res.send({ data: updatedUser });
     }
 }

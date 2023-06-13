@@ -30,8 +30,7 @@ export class User {
     @Column({ nullable: false, default: false })
     admin: boolean;
 
-    @OneToMany(() => Deck, deck => deck.user_id)
+    @OneToMany(() => Deck, deck => deck.user)
     created_decks: Deck[];
-
 
 }

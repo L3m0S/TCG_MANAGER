@@ -17,5 +17,5 @@ export class DeckCard {
 
     @JoinColumn({ name: 'deck_id' })
     @ManyToOne(() => Deck, (deck) => deck.cards)
-    deck_id: Deck;
+    deck: Deck;
 }
