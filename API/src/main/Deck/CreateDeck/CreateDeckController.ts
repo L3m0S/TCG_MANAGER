@@ -6,7 +6,7 @@ export class CreateDeckController {
     async createDeck(req: Request, res: Response) {
         const createDeckService = new CreateDeckService();
 
-        const { deck } = req.body;
+        const { deck } = req?.body;
 
         const createdDeck = await createDeckService.createDeck(deck);
 

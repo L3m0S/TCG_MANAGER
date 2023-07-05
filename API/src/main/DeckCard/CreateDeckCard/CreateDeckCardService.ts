@@ -14,6 +14,8 @@ export class CreateDeckCardService {
             throw new ApiError(`Informe o deck da carta!`, 400)
         }
 
+        //Adicionar uma verificação se o id da carta na pokeAPI existe
+
         const createdDeckCard = await CreateDeckCardRepository.save(deckCard);
 
         return createdDeckCard;

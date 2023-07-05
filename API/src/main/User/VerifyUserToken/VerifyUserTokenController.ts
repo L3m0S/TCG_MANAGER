@@ -11,6 +11,6 @@ export class VerifyUserTokenController {
 
         const profile = await verifyUserTokenService.verifyUserToken(authToken);
 
-        res.json({data: profile})
-    }
-}
+        res.json({ data: profile });
+    };
+};

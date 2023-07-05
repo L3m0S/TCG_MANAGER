@@ -17,11 +17,11 @@ export class UpdateUserService {
 
         if (!userToBeUpdated) {
             throw new ApiError(`Usuário a ser atualizado não encontrado!`, 404);
-        }
+        };
 
         if ((authenticatedUserId !== user.id)) {// implementar admin depois
             throw new ApiError(`Não é possivel atualizar outros usuarios!`, 401)
-        }
+        };
 
         if (!user.email) {
             throw new ApiError(`Informe o e-mail!`, 400);
@@ -58,5 +58,5 @@ export class UpdateUserService {
         const userUpdated = await UpdateUserRepository.save(user);
 
         return userUpdated;
-    }
-}
+    };
+};

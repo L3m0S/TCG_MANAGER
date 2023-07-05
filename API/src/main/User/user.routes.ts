@@ -19,25 +19,25 @@ export default (router: Router): void => {
     UserRouter.get(
         "/login",
         authenticateUser.authenticateUser
-    )
-    
+    );
+
     UserRouter.get(
         "/verifyUserToken",
         ensureAuthenticated,
         verifyUserToken.verifyUserToken
     );
-    
+
     UserRouter.post(
         '/register',
         createUserController.createUser
     );
-    
+
     UserRouter.get(
         "/:userId",
         ensureAuthenticated,
         getUserByIdCotroller.getUserById
     );
-    
+
     UserRouter.put(
         "/atualizar",
         ensureAuthenticated,

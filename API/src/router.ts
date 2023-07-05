@@ -7,7 +7,7 @@ export const setupRoutes = (app: Express): void => {
     app.use('/api/v1/', router);
     const dirs = path.resolve(__dirname, 'main');
     readdirSync(dirs).map(async (pasta) => {
-        const routesDir = path.resolve(__dirname, 'main', `${pasta}`)
+        const routesDir = path.resolve(__dirname, 'main', `${pasta}`);
         readdirSync(routesDir).map(async (fileName) => {
             if (
                 ['.routes.ts', '.routes.js'].some((endRouter) =>

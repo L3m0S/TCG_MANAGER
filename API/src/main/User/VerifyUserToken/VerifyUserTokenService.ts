@@ -24,7 +24,7 @@ export class VerifyUserTokenService {
             return user;
         } catch (error) {
             throw new ApiError(`Não autorizado!`, 401);
-        }
+        };
 
-    }
-}
+    };
+};

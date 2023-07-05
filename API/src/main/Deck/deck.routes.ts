@@ -1,22 +1,19 @@
 import { Router } from "express";
-import multer from 'multer';
-import { multerConfig } from "../CloudStorage/config/multer";
-import { UploadDeckImageController } from "./UploadDeckImage/UploadDeckImageController";
 import { CreateDeckController } from "./CreateDeck/CreateDeckController";
+import { DeckListController } from "./DeckList/DeckListController";
 
-const uploadDeckImageController = new UploadDeckImageController();
+const deckListController = new DeckListController();
 const createDeckController = new CreateDeckController();
 
-export default (router: Router): void => { 
+export default (router: Router): void => {
     const deckRouter = Router();
     router.use('/deck', deckRouter);
 
-    deckRouter.post(
-        "/upload-image",
-        multer(multerConfig).single('deckImage'),
-        uploadDeckImageController.uploadImage
+    deckRouter.get(
+        "/",
+        deckListController.getDeckList
     )
-    
+
     deckRouter.post(
         "/",
         createDeckController.createDeck

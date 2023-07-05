@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Deck } from "./Deck.entity";
+import { Article } from "./Article.entity";
 
 @Entity('users')
 export class User {
@@ -33,4 +34,6 @@ export class User {
     @OneToMany(() => Deck, deck => deck.user)
     created_decks: Deck[];
 
+    @OneToMany(() => Article, article => article.user)
+    created_articles: Article[];
 }
