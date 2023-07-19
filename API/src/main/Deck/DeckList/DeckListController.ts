@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { DeckListService } from "./DeckListService";
 
-
 export class DeckListController {
 
     async getDeckList(req: Request, res: Response) {

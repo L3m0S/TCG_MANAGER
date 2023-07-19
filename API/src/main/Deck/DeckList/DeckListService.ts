@@ -1,5 +1,3 @@
-import { Deck } from "../../../entities/Deck.entity";
-import { ApiError } from "../../../helpers/apiErrors";
 import { DeckListRepository } from "./DeckListRepository";
 
 export class DeckListService {

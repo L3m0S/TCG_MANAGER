@@ -5,12 +5,12 @@ export class CreateDeckController {
 
     async createDeckCard(req: Request, res: Response) {
 
-        const { deckCard } = req.body
+        const { deckCard } = req.body;
 
         const createDeckService = new CreateDeckCardService();
 
         const createdDeckCard = createDeckService.createDeckCardService(deckCard);
 
-        res.send({ data: createdDeckCard })
+        res.send({ data: createdDeckCard });
     }
 }
