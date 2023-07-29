@@ -5,12 +5,10 @@ export class DeckListController {
 
     async getDeckList(req: Request, res: Response) {
 
-        const page = req?.query?.page ?? 1;
-        const pageSize = req?.query?.pageSize ?? 20
-
+        const params = req?.query;
         const deckListService = new DeckListService();
 
-        const deckList = await deckListService.getDeckList(+page, +pageSize);
+        const deckList = await deckListService.getDeckList(params);
 
         res.send({ data: deckList });
     }

@@ -2,7 +2,7 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, Pri
 import { User } from "./User.entity";
 import { ArticleImage } from "./ArticleImage.entity";
 
-@Entity('articles')
+@Entity('article_publish_requests')
 export class Article {
     @PrimaryGeneratedColumn()
     id: number;

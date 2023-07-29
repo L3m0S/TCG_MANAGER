@@ -1,8 +1,8 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Deck } from "./Deck.entity";
+import { Article } from "./Article.entity";
 
-@Entity('deck_images')
-export class DeckImage {
+@Entity('article_images')
+export class ArticleImage {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -14,8 +14,8 @@ export class DeckImage {
 
     @Column()
     url: string;
-
-    @JoinColumn({ name: 'deck_id' })
-    @OneToOne(() => Deck, (deck) => deck.deck_image)
-    deck: Deck;
-}
+ 
+    @JoinColumn({ name: 'article_id' })
+    @ManyToOne(() => Article, (article) => article.images)
+    article: Article;
+};

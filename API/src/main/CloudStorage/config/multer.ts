@@ -1,4 +1,5 @@
 import { ApiError } from '../../../helpers/apiErrors';
+import multer from "multer";
 
 const multerConfig = {
     limits: {
@@ -19,4 +20,6 @@ const multerConfig = {
     }
 };
 
-export { multerConfig };
+const multerApp = multer(multerConfig);
+
+export { multerApp };

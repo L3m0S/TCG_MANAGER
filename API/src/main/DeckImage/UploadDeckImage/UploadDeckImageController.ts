@@ -5,10 +5,12 @@ import { UploadDeckImageService } from "./UploadDeckImageService";
 export class UploadDeckImageController {
 
     async uploadImage(req: Request, res: Response) {
-        const { deckId } = req.body;
-        const deckImage = req.file;
-        console.log(deckImage)
+        const { deckId } = req.params;
+        const image = req.file;
+
         const uploadDeckImageService = new UploadDeckImageService();
-        uploadDeckImageService.uploadImage('teste', deckImage, '1');
-    }
-}
+        const deckImage = await uploadDeckImageService.uploadImage(image, +deckId);
+
+        res.send({ data: deckImage });
+    };
+};
