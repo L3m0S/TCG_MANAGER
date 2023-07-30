@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { User } from "./User.entity";
 import { ArticleImage } from "./ArticleImage.entity";
+import { ArticlePublishRequest } from "./ArticlePublishRequest";
 
 @Entity('articles')
 export class Article {
@@ -22,4 +23,7 @@ export class Article {
 
     @OneToMany(() => ArticleImage, image => image.article)
     images: ArticleImage[];
-}
+
+    @OneToMany(() => ArticlePublishRequest, publishRequest => publishRequest.article)
+    publishRequests: ArticlePublishRequest[];
+};

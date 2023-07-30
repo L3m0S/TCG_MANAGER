@@ -14,6 +14,12 @@ export class ArticleImage {
 
     @Column()
     url: string;
+
+    @Column()
+    name: string;
+
+    @Column()
+    identifier: string;
  
     @JoinColumn({ name: 'article_id' })
     @ManyToOne(() => Article, (article) => article.images)

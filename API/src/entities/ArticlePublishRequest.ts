@@ -1,9 +1,10 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { User } from "./User.entity";
 import { ArticleImage } from "./ArticleImage.entity";
+import { Article } from "./Article.entity";
 
 @Entity('article_publish_requests')
-export class Article {
+export class ArticlePublishRequest {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -13,13 +14,17 @@ export class Article {
     @UpdateDateColumn()
     updated_at: Date;
 
+    @Column()
+    status: 'PENDING' | 'PUBLISHED' | 'REFUSED';
+
     @Column({ type: 'text', nullable: false })
-    content: string;
+    message: string;
 
-    @JoinColumn({ name: 'user_id' })
-    @ManyToOne(() => User, user => user.created_articles)
-    user: User;
+    @JoinColumn({ name: 'action_user_id' })
+    @ManyToOne(() => User)
+    action_user: User;
 
-    @OneToMany(() => ArticleImage, image => image.article)
-    images: ArticleImage[];
-}
+    @JoinColumn({ name: 'article_id' })
+    @ManyToOne(() => Article, article => article.publishRequests)
+    article: Article;
+};

@@ -1,5 +1,6 @@
 import { Article } from "../../../entities/Article.entity";
 import { ApiError } from "../../../helpers/apiErrors";
+import { UploadArticleImageService } from "../../ArticleImage/UploadArticleImage/UploadArticleImageService";
 import { GetUserByIdService } from "../../User/GetUserById/GetUserByIdService";
 import { CreateArticleRepository } from "./CreateArticleRepository";
 
@@ -25,6 +26,14 @@ export class CreateArticleService {
 
         const createdArticle = await CreateArticleRepository.save(article);
 
+        const imageService = new UploadArticleImageService();
+        const imgs = []
+        for (const image of article?.images) {
+            imgs.push(await imageService.uploadImage(image, createdArticle.id));
+        };
+
+        const content = article?.content;
+
         return createdArticle;
-    }
-}
+    };
+};

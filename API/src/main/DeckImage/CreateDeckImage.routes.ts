@@ -10,7 +10,6 @@ export default (router: Router): void => {
 
     deckRouter.post(
         "/upload-image/:deckId",
-        multerApp.single('file'),
         uploadDeckImageController.uploadImage
     );
 }; 

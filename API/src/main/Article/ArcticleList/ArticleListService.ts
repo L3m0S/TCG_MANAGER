@@ -1,4 +1,4 @@
-import { ArticleListRepository } from "./ArticleListRepository";;
+import { ArticleRepository } from "../ArticleRepository";
 
 export class ArticleListService {
 
@@ -14,7 +14,7 @@ export class ArticleListService {
         // console.log({where: {
         //     ...params
         // }})
-        const list = await ArticleListRepository.findAndCount({
+        const list = await ArticleRepository.findAndCount({
             skip: ((+page - 1) * +pageSize),
             take: +pageSize
         });

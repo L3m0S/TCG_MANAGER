@@ -1,11 +1,14 @@
-import { DeckImage } from "../../../entities/DeckImage.entity";
+import { ArticleImage } from "../../../entities/ArticleImage.entity";
 import { ApiError } from "../../../helpers/apiErrors";
+import { IFile } from "../../../interfaces/fileInterface";
+import { GetArticleByIdService } from "../../Article/GetArticleByid/GetArticleByIdService";
 import { UploadImageService } from "../../CloudStorage/UploadImage/UploadImageService";
+import { articleImageRepository } from "../ArticleImageRepository";
 
 export class UploadArticleImageService {
-    public path = 'deck/deck-images';
+    private path = 'deck/deck-images';
 
-    async uploadImage(file: any, articleId: number) {
+    async uploadImage(file: IFile, articleId: number): Promise<ArticleImage> {
 
         if (!articleId) {
             throw new ApiError('Informe o artigo vinculado a imagem!', 400);
@@ -14,14 +17,22 @@ export class UploadArticleImageService {
         const uploadImageService = new UploadImageService();
         const url = await uploadImageService.uploadImage(this.path, file);
 
-        //adicionar getByIdArticle
+        const getArticleByIdService = new GetArticleByIdService();
 
-        // const image = new DeckImage();
-        // image.url = url;
-        // image.deck = deck;
+        const articleExists = await getArticleByIdService.getArticleBydId(articleId);
 
-        // const deckImage = await DeckImageRepository.save(image);
+        if (!articleExists) {
+            throw new ApiError('Artigo com o id informado não foi encontrado!', 400);
+        };
 
-        // return deckImage;
+        const image = new ArticleImage();
+        image.url = url;
+        image.article = articleExists;
+        image.name = file.originalName;
+        image.identifier = file.identifier;
+
+        const articleImage = await articleImageRepository.save(image);
+
+        return articleImage;
     };
 };
