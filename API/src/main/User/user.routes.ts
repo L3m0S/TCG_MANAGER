@@ -39,8 +39,7 @@ export default (router: Router): void => {
     );
 
     UserRouter.put(
-        "/atualizar",
-        ensureAuthenticated,
+        "/",
         updateUserController.updateUser
     );
 };

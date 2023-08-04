@@ -15,6 +15,12 @@ export class DeckImage {
     @Column()
     url: string;
 
+    @Column()
+    name: string;
+
+    @Column()
+    original_name: string;
+
     @JoinColumn({ name: 'deck_id' })
     @OneToOne(() => Deck, (deck) => deck.deck_image)
     deck: Deck;

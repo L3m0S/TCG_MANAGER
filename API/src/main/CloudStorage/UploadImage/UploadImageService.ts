@@ -6,7 +6,7 @@ import { IFile } from '../../../interfaces/fileInterface';
 
 export class UploadImageService {
 
-    async uploadImage(path: string, file: IFile): Promise<string> {
+    async uploadImage(path: string, file: IFile): Promise<{ url: string, fileName: string }> {
 
         if (!path) {
             throw new Error('Informe o caminho a ser salva a imagem!');
@@ -25,6 +25,6 @@ export class UploadImageService {
 
         const url = await getDownloadURL(fireStorage);
 
-        return url;
+        return {url, fileName};
     };
 };

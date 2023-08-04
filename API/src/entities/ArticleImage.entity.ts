@@ -19,6 +19,9 @@ export class ArticleImage {
     name: string;
 
     @Column()
+    original_name: string;
+
+    @Column()
     identifier: string;
  
     @JoinColumn({ name: 'article_id' })

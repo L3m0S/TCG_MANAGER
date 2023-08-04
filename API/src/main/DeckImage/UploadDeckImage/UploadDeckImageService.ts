@@ -15,19 +15,21 @@ export class UploadDeckImageService {
             throw new ApiError('Informe o deck vinculado a imagem!', 400);
         };
 
-        const uploadImageService = new UploadImageService();
-        const url = await uploadImageService.uploadImage(this.path, file);
-
         const getDeckByIdService = new GetDeckByIdService();
         const deck = await getDeckByIdService.getDeckById(deckId);
 
         if (!deck) {
-            throw new ApiError('Deck informado não encontrado!', 400);
+            throw new ApiError('Deck informado não encontrado!', 404);
         };
 
+        const uploadImageService = new UploadImageService();
+        const uploadedImage = await uploadImageService.uploadImage(this.path, file);
+
         const image = new DeckImage();
-        image.url = url;
+        image.url = uploadedImage.url;
         image.deck = deck;
+        image.name = uploadedImage?.fileName;
+        image.original_name = file?.originalName;
 
         const deckImage = await DeckImageRepository.save(image);
 

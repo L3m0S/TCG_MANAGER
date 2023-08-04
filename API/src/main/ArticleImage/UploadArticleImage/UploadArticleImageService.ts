@@ -15,7 +15,7 @@ export class UploadArticleImageService {
         };
 
         const uploadImageService = new UploadImageService();
-        const url = await uploadImageService.uploadImage(this.path, file);
+        const uploadedImage = await uploadImageService.uploadImage(this.path, file);
 
         const getArticleByIdService = new GetArticleByIdService();
 
@@ -26,10 +26,10 @@ export class UploadArticleImageService {
         };
 
         const image = new ArticleImage();
-        image.url = url;
+        image.url = uploadedImage.url;
         image.article = articleExists;
         image.name = file.originalName;
-        image.identifier = file.identifier;
+        image.identifier = file.identifier!;
 
         const articleImage = await articleImageRepository.save(image);
 
