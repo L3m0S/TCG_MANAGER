@@ -10,7 +10,7 @@ export class GetArticleByIdService {
             throw new ApiError('Informe o id do artigo!', 400);
         };
 
-        const article = await ArticleRepository.getArticleById(id);
+        const article = await ArticleRepository.findOneBy({ id: id });
 
         if (!article) {
             throw new ApiError('Artigo com o id informado não foi encontrado!', 400);

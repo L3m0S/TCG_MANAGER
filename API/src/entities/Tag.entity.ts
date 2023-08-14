@@ -18,4 +18,4 @@ export class Tag {
     @JoinColumn({ name: 'user_id' })
     @ManyToOne(() => User, user => user.created_articles)
     user: User;
-}
+};

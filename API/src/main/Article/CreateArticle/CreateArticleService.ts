@@ -16,7 +16,7 @@ export class CreateArticleService {
             throw new ApiError(`Preencha o conteúdo do artigo!`, 400);
         };
 
-        if (!article?.user) {
+        if (!article?.user?.id) {
             throw new ApiError(`Informe o usúario criador do artigo!`, 400);
         };
 

@@ -17,6 +17,12 @@ export class Article {
     @Column({ type: 'text', nullable: false })
     content: string;
 
+    @Column({ type: 'text', nullable: false })
+    title: string;
+
+    @Column({ type: 'text', nullable: false, length: 1000 })
+    description: string;
+
     @JoinColumn({ name: 'user_id' })
     @ManyToOne(() => User, user => user.created_articles)
     user: User;

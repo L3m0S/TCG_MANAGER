@@ -9,20 +9,20 @@ export class RandomCardService {
 
         const apiConfig = new CardApiConfig().getConfig();
 
-        const randomPage = Math.floor(Math.random() * 320);
-        const randomCardIndex = Math.floor(Math.random() * 49);
+        const randomPage = Math.floor(Math.random() * 800);
+        const randomCardIndex = Math.floor(Math.random() * 19);
 
         let cardList;
         let randomCard: ICard;
 
         try {
             cardList = (await axios.get(
-                `${apiConfig.url}/cards?page=${randomPage}&pageSize=50`,
+                `${apiConfig.url}/cards?page=${randomPage}&pageSize=20`,
             )).data;
             randomCard = cardList.data[randomCardIndex];
         } catch (err: any) {
             throw new ApiError(err.message, err.response?.status);
-        }
+        };
 
         return randomCard;
     }

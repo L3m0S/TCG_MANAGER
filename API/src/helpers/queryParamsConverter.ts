@@ -18,7 +18,7 @@ export class QueryParamsConverter<T extends EntityFilter> {
         const filterKeys = Object.keys(params);
 
         const validKeys = filterKeys.filter((key) =>
-            this.repository.metadata.columns.find((column) => column.propertyPath === key)
+            this.repository?.metadata?.columns?.find((column) => column?.propertyPath === key)
         );
 
         const filterObject: Partial<T> = validKeys.reduce((obj, key) => {
