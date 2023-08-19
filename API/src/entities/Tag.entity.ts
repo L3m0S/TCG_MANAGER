@@ -16,6 +16,6 @@ export class Tag {
     name: string;
 
     @JoinColumn({ name: 'user_id' })
-    @ManyToOne(() => User, user => user.created_articles)
+    @ManyToOne(() => User)
     user: User;
 };

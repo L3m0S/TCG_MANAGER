@@ -8,8 +8,8 @@ export class CreateUserController {
 
         const createUserService = new CreateUserService();
 
-        const userCreated = await createUserService.createUser(email, password, name, user_name);
+        const createdUser = await createUserService.createUser(email, password, name, user_name);
 
-        return res.json({ data: userCreated });
+        return res.json({ data: createdUser });
     }
 }
