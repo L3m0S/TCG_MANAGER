@@ -2,6 +2,7 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, Pri
 import { User } from "./User.entity";
 import { ArticleImage } from "./ArticleImage.entity";
 import { ArticlePublishRequest } from "./ArticlePublishRequest";
+import { ArticleTag } from "./ArticleTag.entity";
 
 @Entity('articles')
 export class Article {
@@ -14,13 +15,13 @@ export class Article {
     @UpdateDateColumn()
     updated_at: Date;
 
-    @Column({ type: 'text', nullable: false })
+    @Column({ type: 'varchar', nullable: false })
     content: string;
 
     @Column({ type: 'text', nullable: false })
     title: string;
 
-    @Column({ type: 'text', nullable: false, length: 1000 })
+    @Column({ type: 'varchar', nullable: false, length: 1000 })
     description: string;
 
     @JoinColumn({ name: 'user_id' })
@@ -32,4 +33,7 @@ export class Article {
 
     @OneToMany(() => ArticlePublishRequest, publishRequest => publishRequest.article)
     publishRequests: ArticlePublishRequest[];
+
+    @OneToMany(() => ArticleTag, articleTag => articleTag.article)
+    tags: ArticleTag[];
 };
