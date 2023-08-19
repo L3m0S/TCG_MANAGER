@@ -1,4 +1,4 @@
-import { GetEntityList } from "../../../helpers/queryParamsConverter";
+import { GetEntityList } from "../../../helpers/getEntityList";
 import { tagRepository } from "../TagRepository";
 
 export class GetTagListService {
