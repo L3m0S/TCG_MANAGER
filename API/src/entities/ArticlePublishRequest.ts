@@ -1,6 +1,5 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { User } from "./User.entity";
-import { ArticleImage } from "./ArticleImage.entity";
 import { Article } from "./Article.entity";
 
 @Entity('article_publish_requests')

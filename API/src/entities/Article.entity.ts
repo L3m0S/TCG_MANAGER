@@ -24,6 +24,9 @@ export class Article {
     @Column({ type: 'varchar', nullable: false, length: 1000 })
     description: string;
 
+    @Column({ type: 'boolean', nullable: false, default: false })
+    deleted: boolean;
+
     @JoinColumn({ name: 'user_id' })
     @ManyToOne(() => User, user => user.created_articles)
     user: User;
@@ -36,4 +39,5 @@ export class Article {
 
     @OneToMany(() => ArticleTag, articleTag => articleTag.article)
     tags: ArticleTag[];
+
 };
