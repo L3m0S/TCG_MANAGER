@@ -5,13 +5,21 @@ import { GetArticleByIdService } from "../../Article/GetArticleByid/GetArticleBy
 import { UploadImageService } from "../../CloudStorage/UploadImage/UploadImageService";
 import { articleImageRepository } from "../ArticleImageRepository";
 
+interface IArticleThumbnail extends ArticleImage {
+    string64: string;
+};
 export class UploadArticleImageService {
     private path = 'deck/deck-images';
 
-    async uploadImage(file: IFile, articleId: number): Promise<ArticleImage> {
+    async uploadImage(articleImage: IArticleThumbnail): Promise<ArticleImage> {
 
-        if (!articleId) {
+        if (!articleImage?.article?.id) {
             throw new ApiError('Informe o artigo vinculado a imagem!', 400);
+        };
+
+        const file: IFile = {
+            originalName: articleImage?.original_name,
+            string64: articleImage?.string64
         };
 
         const uploadImageService = new UploadImageService();
@@ -19,7 +27,7 @@ export class UploadArticleImageService {
 
         const getArticleByIdService = new GetArticleByIdService();
 
-        const articleExists = await getArticleByIdService.getArticleBydId(articleId);
+        const articleExists = await getArticleByIdService.getArticleBydId(articleImage?.article?.id);
 
         if (!articleExists) {
             throw new ApiError('Artigo com o id informado não foi encontrado!', 400);
@@ -31,8 +39,8 @@ export class UploadArticleImageService {
         image.name = file.originalName;
         image.identifier = file.identifier!;
 
-        const articleImage = await articleImageRepository.save(image);
+        const uploadedArticleImage = await articleImageRepository.save(image);
 
-        return articleImage;
+        return  uploadedArticleImage;
     };
 };

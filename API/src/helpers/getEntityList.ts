@@ -63,7 +63,8 @@ export class GetEntityList<T extends EntityFilter> {
     };
 
     private getValidRelations(params: { [key: string]: any }): IRelations {
-        const relationsKeys: string[] = params?.relations?.split(',');
+
+        const relationsKeys: string[] = params?.relations?.split(',').length > 0 ?  params?.relations?.split(',') : [];
 
         const validRelationPaths: string[] = [];
 

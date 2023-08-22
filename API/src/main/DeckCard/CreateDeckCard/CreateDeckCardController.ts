@@ -11,6 +11,6 @@ export class CreateDeckController {
 
         const createdDeckCard = createDeckService.createDeckCardService(deckCard);
 
-        res.send({ data: createdDeckCard });
+        res.json({ data: createdDeckCard });
     }
 }

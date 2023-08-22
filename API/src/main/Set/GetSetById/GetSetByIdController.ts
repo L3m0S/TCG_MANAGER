@@ -12,6 +12,6 @@ export class GetSetByIdController {
 
         const set = await getSetByIdService.GetSetById(id);
 
-        res.send({ data: set });
+        res.json({ data: set });
     };
 };

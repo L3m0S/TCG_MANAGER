@@ -1,32 +1,23 @@
-import { ArticleRepository } from "../ArticleRepository";
+
+import { GetEntityList } from "../../../helpers/getEntityList";
+import { tagRepository } from "../../Tag/TagRepository";
 
 export class ArticleListService {
 
-    async getArticleList(page: number, pageSize: number, searchParams: Object) {
+    async getArticleList(params: { [key: string]: any }) {
 
-        // const params: { [k: string]: any } = {};
+        const getEntityList = new GetEntityList(tagRepository);
+        
+        const list = await getEntityList.getEntityList(params);
 
-        // for (const [key, value] of Object.entries(searchParams)) {
-        //     if (key !== 'pageSize' && key !== 'page') {
-        //         params[key] = value;
-        //     };
-        // };
-        // console.log({where: {
-        //     ...params
-        // }})
-        const list = await ArticleRepository.findAndCount({
-            skip: ((+page - 1) * +pageSize),
-            take: +pageSize
-        });
-
-        const articleList = {
+        const aticleList = {
             data: list[0],
-            page: page,
-            pageSize: pageSize,
+            page: params?.['page'] ?? 1,
+            pageSize: params?.['pageSize'] ?? 20,
             count: list[0].length,
             totalCount: list[1]
         };
 
-        return articleList;
+        return aticleList;
     }
 }

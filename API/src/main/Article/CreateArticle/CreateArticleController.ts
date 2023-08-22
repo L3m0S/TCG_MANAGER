@@ -9,8 +9,8 @@ export class CreateArticleController {
 
         const createArticleService = new CreateArticleService();
 
-        const createdArticle = createArticleService.createArticle(article);
+        const createdArticle = await createArticleService.createArticle(article);
 
-        res.send({ data: createdArticle });
+        res.json({ data: createdArticle });
     }
 }

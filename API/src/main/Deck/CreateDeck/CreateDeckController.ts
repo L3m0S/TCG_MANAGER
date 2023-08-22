@@ -10,6 +10,6 @@ export class CreateDeckController {
 
         const createdDeck = await createDeckService.createDeck(deck);
 
-        res.send({ data: createdDeck });
+        res.json({ data: createdDeck });
     }
 }

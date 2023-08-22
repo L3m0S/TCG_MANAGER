@@ -1,19 +1,32 @@
 import { Article } from "../../../entities/Article.entity";
+import { ArticleImage } from "../../../entities/ArticleImage.entity";
 import { ApiError } from "../../../helpers/apiErrors";
 import { IFile } from "../../../interfaces/fileInterface";
 import { UploadArticleImageService } from "../../ArticleImage/UploadArticleImage/UploadArticleImageService";
 import { GetUserByIdService } from "../../User/GetUserById/GetUserByIdService";
 import { CreateArticleRepository } from "./CreateArticleRepository";
 
-interface IArticle extends Article {
-    uploadImages?: IFile[]
+interface IArticleImage extends ArticleImage {
+    string64: string;
 };
+interface IArticle extends Article {
+    uploadImages?: IArticleImage[];
+};
+
 export class CreateArticleService {
 
     async createArticle(article: IArticle) {
 
         if (article?.content?.length === 0) {
             throw new ApiError(`Preencha o conteúdo do artigo!`, 400);
+        };
+
+        if (!article?.title) {
+            throw new ApiError(`Informe o titulo do artigo!`, 400);
+        };
+
+        if (!article?.description) {
+            throw new ApiError(`Informe uma descrição para o artigo!`, 400);
         };
 
         if (!article?.user?.id) {
@@ -35,7 +48,9 @@ export class CreateArticleService {
 
         if (article?.uploadImages) {
             for (const image of article?.uploadImages!) {
-                imgs.push(await imageService.uploadImage(image, createdArticle.id));
+                image.article = new Article();
+                image.article.id = createdArticle.id;
+                imgs.push(await imageService.uploadImage(image));
             };
         };
 

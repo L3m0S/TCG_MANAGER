@@ -11,6 +11,6 @@ export class GetArticleByIdController {
 
         const article = await getArticleBydIdService.getArticleBydId(+id);
 
-        res.send({ data: article });
+        res.json({ data: article });
     };
 };

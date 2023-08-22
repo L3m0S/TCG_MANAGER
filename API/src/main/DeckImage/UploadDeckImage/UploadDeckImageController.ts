@@ -10,6 +10,6 @@ export class UploadDeckImageController {
         const uploadDeckImageService = new UploadDeckImageService();
         const deckImage = await uploadDeckImageService.uploadImage(image, +deckId);
 
-        res.send({ data: deckImage });
+        res.json({ data: deckImage });
     };
 };

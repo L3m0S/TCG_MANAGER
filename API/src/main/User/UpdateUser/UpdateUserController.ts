@@ -11,6 +11,6 @@ export class UpdateUserController {
 
         const updatedUser = await updateUserService.updateUser(user, +user_id);
 
-        res.send({ data: updatedUser });
+        res.json({ data: updatedUser });
     };
 };

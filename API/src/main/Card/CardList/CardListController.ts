@@ -14,6 +14,6 @@ export class CardListController {
         const cardListService = new CardListService();
         const cardList = await cardListService.getCardList(+page, +pageSize, `${searchParams}`, `${orderByParams}`);
 
-        return res.json({ data: cardList });
+        res.json({ data: cardList });
     }
 }

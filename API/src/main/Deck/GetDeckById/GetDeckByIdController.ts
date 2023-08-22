@@ -11,6 +11,6 @@ export class GetDeckByIdController {
 
         const deck = await getDeckByIdService.getDeckById(+id);
 
-        res.send({ data: deck });
+        res.json({ data: deck });
     };
 };

@@ -29,10 +29,4 @@ export default (router: Router): void => {
         "/",
         createDeckController.createDeck
     );
-
-    deckRouter.post(
-        "/upload-image",
-        multerApp.single('file'),
-        uploadDeckImageController.uploadImage
-    );
 }; 

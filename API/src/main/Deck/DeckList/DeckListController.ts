@@ -10,6 +10,6 @@ export class DeckListController {
 
         const deckList = await deckListService.getDeckList(params);
 
-        res.send({ data: deckList });
+        res.json({ data: deckList });
     }
 }
