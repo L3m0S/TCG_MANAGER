@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Deck } from "./Deck.entity";
+import { ICard } from "../models/Card.model";
 
 @Entity('deck_cards')
 export class DeckCard {
@@ -18,4 +19,6 @@ export class DeckCard {
     @JoinColumn({ name: 'deck_id' })
     @ManyToOne(() => Deck, (deck) => deck.cards)
     deck: Deck;
+
+    cardInfo: ICard;
 }

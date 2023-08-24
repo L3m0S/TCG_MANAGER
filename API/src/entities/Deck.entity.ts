@@ -1,7 +1,8 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { AfterLoad, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { DeckCard } from "./DeckCard.entity";
 import { User } from "./User.entity";
 import { DeckImage } from "./DeckImage.entity";
+import { CardListService } from "../main/Card/CardList/CardListService";
 
 @Entity('decks')
 export class Deck {
@@ -32,4 +33,29 @@ export class Deck {
 
     @OneToOne(() => DeckImage, deckImage => deckImage.deck)
     deck_image: DeckImage;
+
+    @AfterLoad()
+    async getPokeCardInfo() {
+        const getCardListService = new CardListService();
+        let cards = '';
+        this?.cards?.forEach((card, index) =>{
+            if (this?.cards.length === 1) {
+                cards = cards + `id:${card.card_id}`
+            } else {
+                if (index === this?.cards?.length - 1) {
+                    cards = cards + `id:${card.card_id}`
+                } else {
+                    cards = cards + `id:${card.card_id} OR `
+                };
+            };
+        });
+
+        if ( this?.cards?.length > 0)
+            cards = cards + '&select=name,id,images'
+        const cartas = (await getCardListService.getCardList(1, 1000, cards)).data
+
+        this.cards.forEach((card) => {
+            card.cardInfo = cartas?.find((pokeCard) => card?.card_id === pokeCard?.id)!
+        });
+    };
 }

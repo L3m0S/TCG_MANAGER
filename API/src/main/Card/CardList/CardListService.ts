@@ -1,14 +1,22 @@
 import axios from "axios";
 import { ApiError } from "../../../helpers/apiErrors";
 import { CardApiConfig } from "../card-api-config/card-api-config";
+import { ICard } from "../../../models/Card.model";
 
+interface ICardReturn {
+    count: number;
+    data: ICard[]
+    page: number;
+    pageSize: number;
+    totalCount: number
+}
 export class CardListService {
 
-    async getCardList(page: number, pageSize: number, searchParams: string, orderByParams: string) {
+    async getCardList(page: number, pageSize: number, searchParams?: string, orderByParams?: string): Promise<ICardReturn> {
         const apiConfig = new CardApiConfig().getConfig();
 
-        const filters = searchParams.length > 0 ? `&q=${searchParams}` : '';
-        const orderBy = orderByParams.length > 0 ? `&orderBy=${orderByParams}` : '';
+        const filters = searchParams?.length! > 0 ? `&q=${searchParams}` : '';
+        const orderBy = orderByParams?.length! > 0 ? `&orderBy=${orderByParams}` : '';
         const queryParams = `page=${page}&pageSize=${pageSize}${filters}${orderBy}`;
 
         let cardList;
@@ -21,5 +29,5 @@ export class CardListService {
         }
 
         return cardList;
-    }
-}
+    };
+};
