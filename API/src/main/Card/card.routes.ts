@@ -3,10 +3,12 @@ import { ensureAuthenticated } from "../../middlewares/ensureAuthenticated";
 import { CardListController } from "./CardList/CardListController";
 import { GetCardByIdController } from "./GetCardById/GetCardByIdController";
 import { RandomCardController } from "./RandomCard/RandomCardController";
+import { GetCardHintController } from "./GetCardHint/GetCardHintController";
 
 const cardListController = new CardListController();
 const randomCardController = new RandomCardController();
 const getCardByIdController = new GetCardByIdController();
+const getCardHintController = new GetCardHintController();
 
 export default (router: Router): void => { 
     const cardRouter = Router();
@@ -25,5 +27,10 @@ export default (router: Router): void => {
     cardRouter.get(
         '/:id',
         getCardByIdController.getCardById
+    )
+
+    cardRouter.get(
+        '/getCardHint/:cardName',
+        getCardHintController.getCardHintController
     )
 }; 
