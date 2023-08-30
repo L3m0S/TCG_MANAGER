@@ -19,6 +19,6 @@ export class GetCardHintFromGPTService {
         const name = hint.choices[0]?.message?.content?.split(',')[0].split(':')[1].trim();
         const sinergyCard = await getCardListService.getCardList(1, 1, `name:${name}&select=name,id,images`);
 
-        return { card: sinergyCard, hint: hint.choices[0]?.message?.content }
+        return { card: sinergyCard, hint: hint.choices[0]?.message?.content };
     };
 };
