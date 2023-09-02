@@ -1,6 +1,7 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Deck } from "./Deck.entity";
 import { Article } from "./Article.entity";
+import { UserProfileImage } from "./UserProfileImage.entity";
 
 @Entity('users')
 export class User {
@@ -36,4 +37,7 @@ export class User {
 
     @OneToMany(() => Article, article => article.user)
     created_articles: Article[];
+
+    @OneToOne(() => UserProfileImage, userProfileImage => userProfileImage.user)
+    profile_image: UserProfileImage;
 }

@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { multerApp } from "../CloudStorage/config/multer";
 import { UploadDeckImageController } from "./UploadDeckImage/UploadDeckImageController";
 import { DeleteImageController } from "./DeleteDeckImage/DeleteDeckImageController";
 

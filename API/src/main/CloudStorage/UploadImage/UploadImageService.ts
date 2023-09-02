@@ -13,7 +13,7 @@ export class UploadImageService {
         };
 
         const hash = crypto.randomBytes(16);
-        const fileName = `${hash.toString("hex")}-${file.originalName}`;
+        const fileName = `${file.originalName}-${hash.toString("hex")}`;
         const fireStorage = ref(storage, `${path}/${fileName}`);
 
         const imgString = file.string64.split(',')[1];
