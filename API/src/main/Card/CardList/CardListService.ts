@@ -19,15 +19,14 @@ export class CardListService {
         const orderBy = orderByParams?.length! > 0 ? `&orderBy=${orderByParams}` : '';
         const queryParams = `page=${page}&pageSize=${pageSize}${filters}${orderBy}`;
 
-        console.log(`${apiConfig.url}/cards?${queryParams}`)
         let cardList;
         try {
             cardList = (await axios.get(
                 `${apiConfig.url}/cards?${queryParams}`
             )).data;
         } catch (err: any) {
-            throw new ApiError(err.message, err.response?.status)
-        }
+            throw new ApiError(err.message, err.response?.status);
+        };
 
         return cardList;
     };

@@ -1,12 +1,13 @@
+import { ArticleViewProducer } from "./articleViews/Producer/ArticleViewProducer";
 import { ArticleViewReceiver } from "./articleViews/Receiver/ArticleViewReceiver";
 
 
-export class InitializeQueuesReceivers {
+export class InitializeQueues {
 
-    async initializeReceivers() {
+    async initializeQueues() {
 
-        const receiver = new ArticleViewReceiver();
-        await receiver.initArticleViewReceiver();
-
+        //Article view Producers / Receivers
+        await (new ArticleViewReceiver().initArticleViewReceiver());
+        await (new ArticleViewProducer().produceMessage)
     };
 };

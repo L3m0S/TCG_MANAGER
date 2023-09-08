@@ -36,26 +36,27 @@ export class Deck {
 
     @AfterLoad()
     async getPokeCardInfo() {
-        const getCardListService = new CardListService();
-        let cards = '';
-        this?.cards?.forEach((card, index) =>{
-            if (this?.cards.length === 1) {
-                cards = cards + `id:${card.card_id}`
-            } else {
-                if (index === this?.cards?.length - 1) {
+        if (this?.cards?.length > 0) {
+            const getCardListService = new CardListService();
+            let cards = '';
+            this.cards?.forEach((card, index) => {
+                if (this?.cards.length === 1) {
                     cards = cards + `id:${card.card_id}`
                 } else {
-                    cards = cards + `id:${card.card_id} OR `
+                    if (index === this?.cards?.length - 1) {
+                        cards = cards + `id:${card.card_id}`
+                    } else {
+                        cards = cards + `id:${card.card_id} OR `
+                    };
                 };
-            };
-        });
+            });
 
-        if ( this?.cards?.length > 0)
             cards = cards + '&select=name,id,images'
-        const cartas = (await getCardListService.getCardList(1, 1000, cards)).data
+            const cartas = (await getCardListService.getCardList(1, 1000, cards)).data
 
-        this.cards.forEach((card) => {
-            card.cardInfo = cartas?.find((pokeCard) => card?.card_id === pokeCard?.id)!
-        });
+            this.cards.forEach((card) => {
+                card.cardInfo = cartas?.find((pokeCard) => card?.card_id === pokeCard?.id)!
+            });
+        };
     };
-}
+};

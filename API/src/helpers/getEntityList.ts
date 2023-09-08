@@ -7,7 +7,7 @@ interface EntityFilter {
 
 interface IRelations {
     [key: string]: (boolean | { [key: string]: boolean })
-}
+};
 
 export class GetEntityList<T extends EntityFilter> {
     private repository: Repository<T>;
@@ -115,8 +115,8 @@ export class GetEntityList<T extends EntityFilter> {
                         currentObj[segment] = true;
                     } else {
                         currentObj[segment] = {};
-                    }
-                }
+                    };
+                };
                 currentObj = currentObj[segment] as IRelations;
             };
         };

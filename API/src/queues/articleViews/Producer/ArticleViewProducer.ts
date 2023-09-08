@@ -2,7 +2,7 @@ import { CreateQueueConection } from '../../CreateQueueConnection';
 
 export class ArticleViewProducer {
 
-    private queue = 'article_view';
+    private _queue = 'article_view';
 
     async produceMessage(message: string) {
 
@@ -13,9 +13,9 @@ export class ArticleViewProducer {
 
             const channell = await connection.createChannel();
 
-            await channell.assertQueue(this.queue, { durable: true });
+            await channell.assertQueue(this._queue);
 
-            channell.sendToQueue(this.queue,Buffer.from(JSON.stringify(message)));
+            channell.sendToQueue(this._queue,Buffer.from(JSON.stringify(message)));
 
             await channell.close();
 

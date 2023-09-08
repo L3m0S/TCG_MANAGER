@@ -5,7 +5,7 @@ import { CreateQueueConection } from "../../CreateQueueConnection";
 
 export class ArticleViewReceiver {
 
-    private queue = 'article_view';
+    private _queue = 'article_view';
 
     async initArticleViewReceiver() {
 
@@ -14,28 +14,27 @@ export class ArticleViewReceiver {
 
         const channel = await connection.createChannel();
 
-        await channel.assertQueue(this.queue, { durable: true });
+        await channel.assertQueue(this._queue);
 
-        await channel.consume(
-            this.queue,
+        channel.consume(
+            this._queue,
             async (message) => {
                 if (message) {
                     try {
                         const messageJson = JSON.parse(JSON.parse(message.content.toString()));
                         const articleView = new ArticleView();
 
-                        
                         articleView.article = messageJson.article;
                         articleView.user = messageJson.user;
-                        
+
                         await ArticleViewRepository.save(articleView);
+                        channel.ack(message);
                     } catch (err) {
                         channel.reject(message, false);
                         throw new ApiError(`${err}`, 500);
                     };
                 };
-            },
-            { noAck: true }
+            }
         );
     };
 
