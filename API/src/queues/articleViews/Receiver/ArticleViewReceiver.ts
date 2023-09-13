@@ -7,7 +7,7 @@ export class ArticleViewReceiver {
 
     private _queue = 'article_view';
 
-    async initArticleViewReceiver() {
+    async initArticleViewReceiver(): Promise<void> {
 
         const createQueueConnection = new CreateQueueConection();
         const connection = await createQueueConnection.createConecction();

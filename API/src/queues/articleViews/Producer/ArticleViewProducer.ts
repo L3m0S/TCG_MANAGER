@@ -1,26 +1,43 @@
+import { ApiError } from '../../../helpers/apiErrors';
 import { CreateQueueConection } from '../../CreateQueueConnection';
+import { IProducer } from '../../interfaces/IProducer';
 
-export class ArticleViewProducer {
+export class ArticleViewProducer implements IProducer {
 
     private _queue = 'article_view';
+    private _channel: any;
 
-    async produceMessage(message: string) {
-
+    public async build(): Promise<ArticleViewProducer> {
         try {
+            await this.createChannel();
 
+            return this;
+        } catch (err: any) {
+            throw new ApiError(`${err?.message}`, 500);
+        };
+    };
+
+    async createChannel() {
+        try {
             const createQueueConnection = new CreateQueueConection();
             const connection = await createQueueConnection.createConecction();
 
-            const channell = await connection.createChannel();
+            const channel = await connection.createChannel();
 
-            await channell.assertQueue(this._queue);
+            await channel.assertQueue(this._queue);
 
-            channell.sendToQueue(this._queue,Buffer.from(JSON.stringify(message)));
+            this._channel = channel;
+        } catch (err: any) {
+            throw new ApiError(`${err?.message}`, 500);
+        };
+    };
 
-            await channell.close();
+    async produceMessage(message: string) {
+        try {
+            this._channel.sendToQueue(this._queue, Buffer.from(JSON.stringify(message)));
 
-            await connection.close();
-
-        } catch (err) { }
+        } catch (err: any) {
+            throw new ApiError(`${err?.message}`, 500);
+        };
     };
 };

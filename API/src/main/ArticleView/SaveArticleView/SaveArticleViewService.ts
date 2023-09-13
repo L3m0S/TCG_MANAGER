@@ -1,11 +1,17 @@
 import { ArticleView } from "../../../entities/ArticleView.entity";
 import { ApiError } from "../../../helpers/apiErrors";
 import { ArticleViewProducer } from "../../../queues/articleViews/Producer/ArticleViewProducer";
+import { IProducer } from "../../../queues/interfaces/IProducer";
 import { GetArticleByIdService } from "../../Article/GetArticleByid/GetArticleByIdService";
 import { GetUserByIdService } from "../../User/GetUserById/GetUserByIdService";
 
-
 export class SaveArticleViewService {
+
+    private _producer: IProducer;
+    
+    constructor (producer: IProducer) {
+        this._producer = producer;
+    };
 
     async saveArticleView(articleId: number, userId: number) {
 
@@ -34,9 +40,7 @@ export class SaveArticleViewService {
         articleView.article = articleExists;
         articleView.user = userExists;
 
-        const articleViewQueueProducer = new ArticleViewProducer();
-
-        articleViewQueueProducer.produceMessage(JSON.stringify(articleView));
+        this._producer.produceMessage(JSON.stringify(articleView));
 
         return;
     };
