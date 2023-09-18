@@ -14,7 +14,7 @@ const ensureAuthenticated = (req: Request, res: Response, next: NextFunction) =>
     try {
         const subject = verify(token, 'teste');
 
-        req.body = { ...req.body, user_id: subject.sub };
+        req.body = { ...req.body, _user_id: subject.sub };
 
         return next();
     } catch (err) {

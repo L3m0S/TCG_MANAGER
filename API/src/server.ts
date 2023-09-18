@@ -13,6 +13,7 @@ server.use(express.json());
 server.use(cors());
 setupRoutes(server);
 server.use(errorHandler);
+
 server.listen('3333', async () => {
     await AppDataSource.initialize().then(() => {
         console.log('Connected to data base successfully!')

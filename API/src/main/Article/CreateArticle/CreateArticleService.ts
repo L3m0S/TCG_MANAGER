@@ -4,6 +4,8 @@ import { ApiError } from "../../../helpers/apiErrors";
 import { IFile } from "../../../interfaces/fileInterface";
 import { UploadArticleImageService } from "../../ArticleImage/UploadArticleImage/UploadArticleImageService";
 import { GetUserByIdService } from "../../User/GetUserById/GetUserByIdService";
+import { ArticleListService } from "../ArcticleList/ArticleListService";
+import { ArticleRepository } from "../ArticleRepository";
 import { CreateArticleRepository } from "./CreateArticleRepository";
 
 interface IArticleImage extends ArticleImage {
@@ -16,6 +18,10 @@ interface IArticle extends Article {
 export class CreateArticleService {
 
     async createArticle(article: IArticle) {
+
+        if (article?.id) {
+            throw new ApiError(`Não é permitido editar artigos!`, 400);
+        };
 
         if (article?.content?.length === 0) {
             throw new ApiError(`Preencha o conteúdo do artigo!`, 400);
@@ -30,7 +36,7 @@ export class CreateArticleService {
         };
 
         if (!article?.user?.id) {
-            throw new ApiError(`Informe o usúario criador do artigo!`, 400);
+            throw new ApiError(`Informe o usuário criador do artigo!`, 400);
         };
 
         const getUserByIdService = new GetUserByIdService();

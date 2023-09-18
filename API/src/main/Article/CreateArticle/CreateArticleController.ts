@@ -5,12 +5,12 @@ export class CreateArticleController {
 
     async createArticle(req: Request, res: Response) {
 
-        const { article } = req.body;
+        const { article, _user_id } = req.body;
 
         const createArticleService = new CreateArticleService();
 
         const createdArticle = await createArticleService.createArticle(article);
 
         res.json({ data: createdArticle });
-    }
-}
+    };
+};

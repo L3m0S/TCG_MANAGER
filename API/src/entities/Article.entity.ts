@@ -39,5 +39,4 @@ export class Article {
 
     @OneToMany(() => ArticleTag, articleTag => articleTag.article)
     tags: ArticleTag[];
-
 };

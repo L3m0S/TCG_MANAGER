@@ -1,12 +1,13 @@
 
 import { GetEntityList } from "../../../helpers/getEntityList";
 import { tagRepository } from "../../Tag/TagRepository";
+import { ArticleRepository } from "../ArticleRepository";
 
 export class ArticleListService {
 
     async getArticleList(params: { [key: string]: any }) {
 
-        const getEntityList = new GetEntityList(tagRepository);
+        const getEntityList = new GetEntityList(ArticleRepository);
         
         const list = await getEntityList.getEntityList(params);
 
