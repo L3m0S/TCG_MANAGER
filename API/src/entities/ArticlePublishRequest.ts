@@ -1,6 +1,7 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 import { User } from "./User.entity";
 import { Article } from "./Article.entity";
+
 
 @Entity('article_publish_requests')
 export class ArticlePublishRequest {
@@ -13,10 +14,10 @@ export class ArticlePublishRequest {
     @UpdateDateColumn()
     updated_at: Date;
 
-    @Column()
+    @Column({ type: 'text', default: 'PENDING', nullable: false })
     status: 'PENDING' | 'PUBLISHED' | 'REFUSED';
 
-    @Column({ type: 'text', nullable: false })
+    @Column({ type: 'text', nullable: true })
     message: string;
 
     @JoinColumn({ name: 'action_user_id' })

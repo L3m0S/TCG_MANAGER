@@ -1,10 +1,11 @@
+import { User } from "../../../entities/User.entity";
 import { ApiError } from "../../../helpers/apiErrors";
 import { GetUserByIdRepository } from "./GetUserByIdRepository";
 
 
 export class GetUserByIdService {
 
-    async getUserById(userId: number) {
+    async getUserById(userId: number): Promise<User> {
 
         if (!userId) {
             throw new ApiError(`ID não informado!`, 400);
@@ -17,5 +18,5 @@ export class GetUserByIdService {
         }
 
         return user;
-    }
-}
+    };
+};
