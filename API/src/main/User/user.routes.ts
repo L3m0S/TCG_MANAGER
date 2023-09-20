@@ -5,12 +5,14 @@ import { CreateUserController } from "./CreateUser/CreateUserController";
 import { GetUserByIdController } from "./GetUserById/GetUserByIdController";
 import { VerifyUserTokenController } from "./VerifyUserToken/VerifyUserTokenController";
 import { UpdateUserController } from "./UpdateUser/UpdateUserController";
+import { DeleteUserController } from "./DeleteUser/DeleteUserController";
 
 const createUserController = new CreateUserController();
 const authenticateUser = new AuthenticateUserController();
 const getUserByIdCotroller = new GetUserByIdController();
 const verifyUserToken = new VerifyUserTokenController();
 const updateUserController = new UpdateUserController();
+const deleteUserController = new DeleteUserController();
 
 export default (router: Router): void => {
     const UserRouter = Router();
@@ -40,6 +42,13 @@ export default (router: Router): void => {
 
     UserRouter.put(
         "/",
+        ensureAuthenticated,
         updateUserController.updateUser
+    );
+
+    UserRouter.delete(
+        "/:userId",
+        ensureAuthenticated,
+        deleteUserController.deleteUser
     );
 };

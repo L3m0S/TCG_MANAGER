@@ -9,13 +9,13 @@ export class GetUserByIdService {
 
         if (!userId) {
             throw new ApiError(`ID não informado!`, 400);
-        }
+        };
 
         const user = await GetUserByIdRepository.findOneBy({ id: userId });
 
         if (!user) {
             throw new ApiError(`Usuario não encontrado!`, 404);
-        }
+        };
 
         return user;
     };

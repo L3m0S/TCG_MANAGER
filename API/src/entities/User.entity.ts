@@ -32,6 +32,9 @@ export class User {
     @Column({ nullable: false, default: false })
     admin: boolean;
 
+    @Column({ nullable: false, default: false })
+    deleted: boolean;
+
     @OneToMany(() => Deck, deck => deck.user)
     created_decks: Deck[];
 
@@ -40,4 +43,4 @@ export class User {
 
     @OneToOne(() => UserProfileImage, userProfileImage => userProfileImage.user)
     profile_image: UserProfileImage;
-}
+};
