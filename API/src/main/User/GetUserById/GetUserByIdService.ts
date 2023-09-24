@@ -11,7 +11,7 @@ export class GetUserByIdService {
             throw new ApiError(`ID não informado!`, 400);
         };
 
-        const user = await GetUserByIdRepository.findOneBy({ id: userId });
+        const user = await GetUserByIdRepository.findOneBy({ id: userId, deleted: false });
 
         if (!user) {
             throw new ApiError(`Usuario não encontrado!`, 404);

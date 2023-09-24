@@ -35,7 +35,7 @@ export class Article {
     images: ArticleImage[];
 
     @OneToMany(() => ArticlePublishRequest, publishRequest => publishRequest.article)
-    publishRequests: ArticlePublishRequest[];
+    publish_requests: ArticlePublishRequest[];
 
     @OneToMany(() => ArticleTag, articleTag => articleTag.article)
     tags: ArticleTag[];

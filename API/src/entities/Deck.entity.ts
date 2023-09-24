@@ -34,6 +34,9 @@ export class Deck {
     @OneToOne(() => DeckImage, deckImage => deckImage.deck)
     deck_image: DeckImage;
 
+    @Column({type: 'boolean', nullable: false, default: false})
+    deleted: boolean;
+
     @AfterLoad()
     async getPokeCardInfo() {
         if (this?.cards?.length > 0) {

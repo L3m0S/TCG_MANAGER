@@ -1,4 +1,4 @@
-import { EntityMetadata, Repository } from "typeorm";
+import { EntityMetadata, FindOptionsWhere, Like, Repository } from "typeorm";
 import { FindManyOptions } from 'typeorm/find-options/FindManyOptions';
 
 interface EntityFilter {
@@ -47,17 +47,27 @@ export class GetEntityList<T extends EntityFilter> {
     };
 
     private getValidFilterKeys(params: { [key: string]: any }): { [key: string]: any } {
-        this.getValidRelations((params));
         const filterKeys = Object.keys(params);
 
         const validKeys = filterKeys?.filter((key) =>
-            this.repository?.metadata?.columns?.find((column) => column?.propertyPath === key)
+            this.repository?.metadata?.columns?.find((column) => {
+                if (key.includes('$')) {
+                    return column?.propertyPath === key.split('$')[0];
+                } else {
+                    return column?.propertyPath === key
+                };
+            })
         );
 
-        const filterObject: Partial<T> = validKeys.reduce((obj, key) => {
+        const filterObject: FindOptionsWhere<T>= validKeys.reduce((obj, key) => {
+
+            let objKey = key;
+            if (key.includes('$')) {
+                this.convertParamsOperators(objKey,obj);
+            };
             obj[key as keyof T] = params[key];
             return obj;
-        }, {} as Partial<T>);
+        }, {} as FindOptionsWhere<T>);
 
         return filterObject;
     };
@@ -122,5 +132,21 @@ export class GetEntityList<T extends EntityFilter> {
         };
 
         return result;
+    };
+
+    private convertParamsOperators(field: string, params?: FindOptionsWhere<T> ) {
+
+        let whereOptions: FindOptionsWhere<T> = {}
+
+        const operator = field?.split(`$`)[1];
+        const key = field?.split(`$`)[0]
+
+        // switch (operator) {
+        //     case 'like':
+        //         whereOptions[key] = Like(`%${params[key]}%`)
+        //         break
+        // }
+
+        
     };
 };

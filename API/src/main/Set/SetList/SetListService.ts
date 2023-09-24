@@ -1,7 +1,7 @@
 import axios from "axios";
 import { CardApiConfig } from "../../Card/card-api-config/card-api-config";
 import { ApiError } from "../../../helpers/apiErrors";
-import { ISet } from "../../../models/Set.model";
+import { ISet } from "../../../interfaces/Set.model";
 
 
 export class SetListService {

@@ -9,7 +9,7 @@ export class GetDeckByIdService {
             throw new ApiError('Informe o deck vinculado a imagem!', 400);
         };
 
-        const deck = await deckRepository.findOneBy({ id: deckId });
+        const deck = await deckRepository.findOneBy({ id: deckId, deleted: false, user: true });
 
         return deck;
     };

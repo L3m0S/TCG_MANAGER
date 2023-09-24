@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ApiError } from "../../../helpers/apiErrors";
 import { CardApiConfig } from "../card-api-config/card-api-config";
-import { ICard } from "../../../models/Card.model";
+import { ICard } from "../../../interfaces/Card.model";
 
 
 export class GetCardByIdService {

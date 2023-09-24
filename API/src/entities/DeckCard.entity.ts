@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Deck } from "./Deck.entity";
-import { ICard } from "../models/Card.model";
+import { ICard } from "../interfaces/Card.model";
 
 @Entity('deck_cards')
 export class DeckCard {

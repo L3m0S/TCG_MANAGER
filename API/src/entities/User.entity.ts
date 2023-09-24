@@ -26,9 +26,6 @@ export class User {
     @Column({ type: 'varchar', nullable: false, select: false })
     password: string;
 
-    @Column({ nullable: false, default: 0 })
-    experience_level: number;
-
     @Column({ nullable: false, default: false })
     admin: boolean;
 

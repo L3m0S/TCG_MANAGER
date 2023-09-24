@@ -25,6 +25,6 @@ export class ArticlePublishRequest {
     action_user: User;
 
     @JoinColumn({ name: 'article_id' })
-    @ManyToOne(() => Article, article => article.publishRequests)
+    @ManyToOne(() => Article, article => article.publish_requests)
     article: Article;
 };

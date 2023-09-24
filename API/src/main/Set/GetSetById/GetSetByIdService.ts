@@ -1,8 +1,8 @@
 import axios from "axios";
 import { ApiError } from "../../../helpers/apiErrors";
-import { ISet } from "../../../models/Set.model";
+import { ISet } from "../../../interfaces/Set.model";
 import { CardApiConfig } from "../../Card/card-api-config/card-api-config";
-import { IPokemonApiError } from "../../../models/PokemonApiError.model";
+import { IPokemonApiError } from "../../../interfaces/PokemonApiError.model";
 
 
 export class GetSetByIdService {

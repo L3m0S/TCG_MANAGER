@@ -1,4 +1,5 @@
 import { ApiError } from "../../../helpers/apiErrors";
+import { GetUserByIdService } from "../../User/GetUserById/GetUserByIdService";
 import { ArticleListService } from "../ArcticleList/ArticleListService";
 import { ArticleRepository } from "../ArticleRepository";
 
@@ -22,7 +23,11 @@ export class DeleteArticleService {
             throw new ApiError(`Artigo com o ID ${articleId} não encontrado!`, 404);
         };
 
-        if (articleExists?.user?.id !== +requestUser) {
+        const getUserByIdService = new GetUserByIdService();
+
+        const requestUseExists = await getUserByIdService.getUserById(requestUser);
+
+        if (articleExists?.user?.id !== +requestUser && !requestUseExists.admin) {
             throw new ApiError(`Não é permitido excluir artigos de outros usuários!`, 401);
         };
 
