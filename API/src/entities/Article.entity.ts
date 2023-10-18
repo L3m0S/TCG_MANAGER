@@ -3,6 +3,7 @@ import { User } from "./User.entity";
 import { ArticleImage } from "./ArticleImage.entity";
 import { ArticlePublishRequest } from "./ArticlePublishRequest";
 import { ArticleTag } from "./ArticleTag.entity";
+import { ArticleComment } from "./ArticleComment.entity";
 
 @Entity('articles')
 export class Article {
@@ -39,4 +40,7 @@ export class Article {
 
     @OneToMany(() => ArticleTag, articleTag => articleTag.article)
     tags: ArticleTag[];
+
+    @OneToMany(() => ArticleComment, comments => comments.article)
+    comments: ArticleComment[];
 };

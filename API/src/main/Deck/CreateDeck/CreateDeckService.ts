@@ -29,23 +29,25 @@ export class CreateDeckService {
             throw new ApiError(`Usuário informado não encontrado!`, 400)
         }
 
-        if (!deck?.cards?.length || deck?.cards?.length === 0) {
-            throw new ApiError(`O deck deve possuir ao minimo uma carta!`, 400)
-        }
+        // if (!deck?.cards?.length || deck?.cards?.length === 0) {
+        //     throw new ApiError(`O deck deve possuir ao minimo uma carta!`, 400)
+        // }
 
         const createdDeck = await CreateDeckRepository.save(deck);
 
         const createDeckCardService = new CreateDeckCardService();
 
         const cards = [];
-        for (const card of deck.cards) {
-            card.deck = new Deck();
-            card.deck.id = createdDeck.id;
-            const deckCard = await createDeckCardService.createDeckCardService(card);
-            cards.push(deckCard);
+        if (deck?.cards?.length > 0) {
+            for (const card of deck.cards) {
+                card.deck = new Deck();
+                card.deck.id = createdDeck.id;
+                const deckCard = await createDeckCardService.createDeckCardService(card);
+                cards.push(deckCard);
+            };
         };
 
         createdDeck.cards = cards;
         return createdDeck;
-    }
-}
+    };
+};

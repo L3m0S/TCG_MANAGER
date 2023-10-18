@@ -22,8 +22,10 @@
   },
   "scripts": {
     "dev": "ts-node-dev src/server.ts",
-    "migration:generate": "typeorm-ts-node-commonjs -d ./src/database/conection.ts migration:generate ./src/database/migrations/default",
-    "migration:run": "typeorm-ts-node-commonjs -d ./src/database/conection.ts migration:run"
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
+    "migration:create": "yarn run typeorm migration:create ./src/database/migrations/default",
+    "migration:generate": "typeorm-ts-node-commonjs -d ./src/database/connection.ts migration:generate ./src/database/migrations/default",
+    "migration:run": "typeorm-ts-node-commonjs -d ./src/database/connection.ts migration:run"
   },
   "devDependencies": {
     "@types/amqplib": "^0.10.1",

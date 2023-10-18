@@ -33,7 +33,7 @@ export class UpdateArticleService {
         };
 
         if (article?.user?.id !== articleExists?.user?.id) {
-            throw new ApiError(`Não é permitido alterar o usúario criado do artigo!`, 400);
+            throw new ApiError(`Não é permitido alterar o usúario criador do artigo!`, 400);
         };
 
         const saveArticleService = new CreateArticleService();

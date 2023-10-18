@@ -9,7 +9,7 @@ export class ArticleViewProducer implements IProducer {
 
     public async build(): Promise<ArticleViewProducer> {
         try {
-            await this.createChannel();
+            // await this.createChannel();
 
             return this;
         } catch (err: any) {
