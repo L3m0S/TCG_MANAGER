@@ -1,5 +1,6 @@
-import { EntityMetadata, FindOptionsWhere, Like, Repository } from "typeorm";
+import { EntityMetadata, FindOptionsWhere, ILike, Like, Repository } from "typeorm";
 import { FindManyOptions } from 'typeorm/find-options/FindManyOptions';
+import { ApiError } from "./apiErrors";
 
 interface EntityFilter {
     [key: string]: any;
@@ -79,13 +80,13 @@ export class GetEntityList<T extends EntityFilter> {
     // private getValidFilterKeys(params: { [key: string]: any }): Indexable<any> {
     //     delete params.relations;
     //     const filterKeys = Object.keys(params);
-    
+
     //     const filterObject: Indexable<any> = {};
-    
+
     //     filterKeys.forEach((key) => {
     //         const keySegments = key.split('.');
     //         let currentObj: Indexable<any> = filterObject;
-    
+
     //         for (let i = 0; i < keySegments.length; i++) {
     //             const segment = keySegments[i];
     //             if (i === keySegments.length - 1) {
@@ -101,7 +102,7 @@ export class GetEntityList<T extends EntityFilter> {
     //             }
     //         }
     //     });
-    
+
     //     return filterObject;
     // }
 
@@ -109,36 +110,43 @@ export class GetEntityList<T extends EntityFilter> {
         delete params.relations;
         const filterKeys = Object.keys(params);
         let entityMetadata = this.repository.metadata;
-    
+
         const filterObject: Indexable<any> = {};
-    
+
         const validateFieldInMetadata = (metadata: EntityMetadata, fieldName: string) => {
             return !!metadata.columns.find((col) => col.propertyPath === fieldName);
         };
-    
+
         const validateFieldInRelations = (metadata: EntityMetadata, fieldPath: string[]): boolean => {
             const [field, ...restPath] = fieldPath;
-            const relation = metadata.relations.find((rel) => rel.propertyName === field);
+            const fieldKey = field.includes('$') ? field.split('$')[0] : field;
+            const relation = metadata.relations.find((rel) => rel.propertyName === fieldKey);
             if (relation) {
                 return validateFieldInRelations(relation.inverseEntityMetadata, restPath);
             }
-            return validateFieldInMetadata(metadata, field);
+            return validateFieldInMetadata(metadata, fieldKey);
         };
-    
+
         filterKeys.forEach((key) => {
             const keySegments = key.split('.');
             const isValidField = validateFieldInRelations(entityMetadata, keySegments);
-            
+
             if (!isValidField) {
-                throw new Error(`Campo inválido: ${key}`);
+                throw new ApiError(`Campo inválido: ${key}`, 400);
             }
-    
+
             let currentObj: Indexable<any> = filterObject;
             for (let i = 0; i < keySegments.length; i++) {
-                const segment = keySegments[i];
+                const segment = keySegments[i].includes('$') ? keySegments[i].split('$')[0] : keySegments[i];
+                
                 if (i === keySegments.length - 1) {
                     // Último segmento, atribuir o valor
-                    currentObj[segment] = params[key];
+
+                    if (key.includes('$like')) {
+                        currentObj[segment] = ILike(`%${params[key]}%`);
+                    } else {
+                        currentObj[segment] = params[key];
+                    };
                 } else {
                     // Segmento intermediário, criar objeto se não existir
                     if (!currentObj[segment]) {
@@ -149,7 +157,7 @@ export class GetEntityList<T extends EntityFilter> {
                 }
             }
         });
-    
+
         return filterObject;
     };
 
