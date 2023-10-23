@@ -3,7 +3,7 @@ import { CreateArticleCommentService } from "./CreateArticleCommentService";
 
 export class CreateArticleCommentController {
 
-    async createArticle(req: Request, res: Response) {
+    async createArticleComment(req: Request, res: Response) {
 
         const { comment, _user_id } = req.body;
 

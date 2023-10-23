@@ -13,7 +13,7 @@ export default (router: Router): void => {
     articleCommentRouter.post(
         "/",
         ensureAuthenticated,
-        createArticleComment.createArticle
+        createArticleComment.createArticleComment
     );
 
     articleCommentRouter.get(

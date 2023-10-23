@@ -16,6 +16,10 @@ export class CreateUserService {
         if (!name)
             throw new ApiError(`Informe o nome!`, 400);
 
+        if (!user_name) {
+            throw new ApiError(`Informe o nome de usuário!`, 400);
+        }
+
         const userAlreadyExists = await CreateUserRepository.findOneBy({ email: email });
 
         if (userAlreadyExists)

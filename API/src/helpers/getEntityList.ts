@@ -9,6 +9,10 @@ interface IRelations {
     [key: string]: (boolean | { [key: string]: boolean })
 };
 
+type Indexable<T> = {
+    [key: string]: T;
+};
+
 export class GetEntityList<T extends EntityFilter> {
     private repository: Repository<T>;
 
@@ -46,35 +50,113 @@ export class GetEntityList<T extends EntityFilter> {
         return parameters;
     };
 
-    private getValidFilterKeys(params: { [key: string]: any }): { [key: string]: any } {
+    // private getValidFilterKeys(params: { [key: string]: any }): { [key: string]: any } {
+    //     const filterKeys = Object.keys(params);
+
+    //     const validKeys = filterKeys?.filter((key) =>
+    //         this.repository?.metadata?.columns?.find((column) => {
+    //             if (key.includes('$')) {
+    //                 return column?.propertyPath === key.split('$')[0];
+    //             } else {
+    //                 return column?.propertyPath === key
+    //             };
+    //         })
+    //     );
+
+    //     const filterObject: FindOptionsWhere<T>= validKeys.reduce((obj, key) => {
+
+    //         let objKey = key;
+    //         if (key.includes('$')) {
+    //             this.convertParamsOperators(objKey,obj);
+    //         };
+    //         obj[key as keyof T] = params[key];
+    //         return obj;
+    //     }, {} as FindOptionsWhere<T>);
+
+    //     return filterObject;
+    // };
+
+    // private getValidFilterKeys(params: { [key: string]: any }): Indexable<any> {
+    //     delete params.relations;
+    //     const filterKeys = Object.keys(params);
+    
+    //     const filterObject: Indexable<any> = {};
+    
+    //     filterKeys.forEach((key) => {
+    //         const keySegments = key.split('.');
+    //         let currentObj: Indexable<any> = filterObject;
+    
+    //         for (let i = 0; i < keySegments.length; i++) {
+    //             const segment = keySegments[i];
+    //             if (i === keySegments.length - 1) {
+    //                 // Último segmento, atribuir o valor
+    //                 currentObj[segment] = params[key];
+    //             } else {
+    //                 // Segmento intermediário, criar objeto se não existir
+    //                 if (!currentObj[segment]) {
+    //                     currentObj[segment] = {};
+    //                 }
+    //                 // Mover para o próximo objeto
+    //                 currentObj = currentObj[segment] as Indexable<any>;
+    //             }
+    //         }
+    //     });
+    
+    //     return filterObject;
+    // }
+
+    private getValidFilterKeys(params: { [key: string]: any }): Indexable<any> {
+        delete params.relations;
         const filterKeys = Object.keys(params);
-
-        const validKeys = filterKeys?.filter((key) =>
-            this.repository?.metadata?.columns?.find((column) => {
-                if (key.includes('$')) {
-                    return column?.propertyPath === key.split('$')[0];
+        let entityMetadata = this.repository.metadata;
+    
+        const filterObject: Indexable<any> = {};
+    
+        const validateFieldInMetadata = (metadata: EntityMetadata, fieldName: string) => {
+            return !!metadata.columns.find((col) => col.propertyPath === fieldName);
+        };
+    
+        const validateFieldInRelations = (metadata: EntityMetadata, fieldPath: string[]): boolean => {
+            const [field, ...restPath] = fieldPath;
+            const relation = metadata.relations.find((rel) => rel.propertyName === field);
+            if (relation) {
+                return validateFieldInRelations(relation.inverseEntityMetadata, restPath);
+            }
+            return validateFieldInMetadata(metadata, field);
+        };
+    
+        filterKeys.forEach((key) => {
+            const keySegments = key.split('.');
+            const isValidField = validateFieldInRelations(entityMetadata, keySegments);
+            
+            if (!isValidField) {
+                throw new Error(`Campo inválido: ${key}`);
+            }
+    
+            let currentObj: Indexable<any> = filterObject;
+            for (let i = 0; i < keySegments.length; i++) {
+                const segment = keySegments[i];
+                if (i === keySegments.length - 1) {
+                    // Último segmento, atribuir o valor
+                    currentObj[segment] = params[key];
                 } else {
-                    return column?.propertyPath === key
-                };
-            })
-        );
-
-        const filterObject: FindOptionsWhere<T>= validKeys.reduce((obj, key) => {
-
-            let objKey = key;
-            if (key.includes('$')) {
-                this.convertParamsOperators(objKey,obj);
-            };
-            obj[key as keyof T] = params[key];
-            return obj;
-        }, {} as FindOptionsWhere<T>);
-
+                    // Segmento intermediário, criar objeto se não existir
+                    if (!currentObj[segment]) {
+                        currentObj[segment] = {};
+                    }
+                    // Mover para o próximo objeto
+                    currentObj = currentObj[segment] as Indexable<any>;
+                }
+            }
+        });
+    
         return filterObject;
     };
 
+
     private getValidRelations(params: { [key: string]: any }): IRelations {
 
-        const relationsKeys: string[] = params?.relations?.split(',').length > 0 ?  params?.relations?.split(',') : [];
+        const relationsKeys: string[] = params?.relations?.split(',').length > 0 ? params?.relations?.split(',') : [];
 
         const validRelationPaths: string[] = [];
 
@@ -134,7 +216,7 @@ export class GetEntityList<T extends EntityFilter> {
         return result;
     };
 
-    private convertParamsOperators(field: string, params?: FindOptionsWhere<T> ) {
+    private convertParamsOperators(field: string, params?: FindOptionsWhere<T>) {
 
         let whereOptions: FindOptionsWhere<T> = {}
 
@@ -147,6 +229,6 @@ export class GetEntityList<T extends EntityFilter> {
         //         break
         // }
 
-        
+
     };
 };

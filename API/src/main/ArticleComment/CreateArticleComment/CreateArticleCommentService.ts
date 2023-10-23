@@ -16,6 +16,10 @@ export class CreateArticleCommentService {
             throw new ApiError(`Informe o artigo relacionado ao comentário!`, 400);
         };
 
+        if (!comment?.content || comment?.content.length === 0) {
+            throw new ApiError(`Preencha o comentário!`, 400);
+        };
+
         const getArticleService = new GetArticleByIdService();
 
         const articleExists = await getArticleService.getArticleBydId(+comment?.article?.id)
