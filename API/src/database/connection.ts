@@ -16,3 +16,5 @@ export const AppDataSource = new DataSource({
     migrationsRun: true,
     ssl: true
 });
+
+console.log(`${__dirname}/../entities/*.{ts,js}`)
