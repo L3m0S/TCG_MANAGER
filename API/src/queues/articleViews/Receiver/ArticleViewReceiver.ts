@@ -9,33 +9,33 @@ export class ArticleViewReceiver {
 
     async initArticleViewReceiver(): Promise<void> {
 
-        // const createQueueConnection = new CreateQueueConection();
-        // const connection = await createQueueConnection.createConecction();
+        const createQueueConnection = new CreateQueueConection();
+        const connection = await createQueueConnection.createConecction();
 
-        // const channel = await connection.createChannel();
+        const channel = await connection.createChannel();
 
-        // await channel.assertQueue(this._queue);
+        await channel.assertQueue(this._queue);
 
-        // channel.consume(
-        //     this._queue,
-        //     async (message) => {
-        //         if (message) {
-        //             try {
-        //                 const messageJson = JSON.parse(JSON.parse(message.content.toString()));
-        //                 const articleView = new ArticleView();
+        channel.consume(
+            this._queue,
+            async (message) => {
+                if (message) {
+                    try {
+                        const messageJson = JSON.parse(JSON.parse(message.content.toString()));
+                        const articleView = new ArticleView();
 
-        //                 articleView.article = messageJson.article;
-        //                 articleView.user = messageJson.user;
+                        articleView.article = messageJson.article;
+                        articleView.user = messageJson.user;
 
-        //                 await ArticleViewRepository.save(articleView);
-        //                 channel.ack(message);
-        //             } catch (err) {
-        //                 channel.reject(message, false);
-        //                 throw new ApiError(`${err}`, 500);
-        //             };
-        //         };
-        //     }
-        // );
+                        await ArticleViewRepository.save(articleView);
+                        channel.ack(message);
+                    } catch (err) {
+                        channel.reject(message, false);
+                        throw new ApiError(`${err}`, 500);
+                    };
+                };
+            }
+        );
     };
 
 };

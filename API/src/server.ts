@@ -21,11 +21,12 @@ server.listen('3333', async () => {
         console.log(err)
         throw new ApiError(`Error connection to data base!`, 500);
     });
-    // await (new InitializeQueues().initializeQueues()).then(() => {
-    //     console.log('RabbitMQ queues started!')
-    // }).catch((err) => {
-    //     throw new ApiError(`Error on starting RabbitMQ queues!`, 500);
-    // });
+    await (new InitializeQueues().initializeQueues()).then(() => {
+        console.log('RabbitMQ queues started!')
+    }).catch((err) => {
+        console.log(err)
+        throw new ApiError(`Error on starting RabbitMQ queues!`, 500);
+    });
     console.log('Server is running on PORT: 3333...');
 });
 
