@@ -7,7 +7,7 @@ export class CreateQueueConection {
 
     async createConecction(): Promise<Connection> {
 
-        const connection = await amqp.connect(`amqp://${process.env.RBBT_HOST}`, (error: any, connection: Connection) => {
+        const connection = await amqp.connect(`amqp://${process.env.RBBT_HOST}:5672`, (error: any, connection: Connection) => {
             if (error) {
                 throw new ApiError(`Erro ao processar sua solicitação!`, 500);
             };
