@@ -1,4 +1,4 @@
-import { EntityMetadata, FindOptionsWhere, ILike, Like, Repository } from "typeorm";
+import { EntityMetadata, FindOptionsWhere, ILike, IsNull, Like, Not, Repository } from "typeorm";
 import { FindManyOptions } from 'typeorm/find-options/FindManyOptions';
 import { ApiError } from "./apiErrors";
 
@@ -35,8 +35,8 @@ export class GetEntityList<T extends EntityFilter> {
 
     private getValidSearchParameters(params: { [key: string]: any }): FindManyOptions {
 
-        const validWhereKeys = this.getValidFilterKeys(params);
         const validRelationsKeys = this.getValidRelations(params);
+        const validWhereKeys = this.getValidFilterKeys(params);
 
         const parameters: FindManyOptions = {};
 
@@ -141,12 +141,7 @@ export class GetEntityList<T extends EntityFilter> {
                 
                 if (i === keySegments.length - 1) {
                     // Último segmento, atribuir o valor
-
-                    if (key.includes('$like')) {
-                        currentObj[segment] = ILike(`%${params[key]}%`);
-                    } else {
-                        currentObj[segment] = params[key];
-                    };
+                        currentObj[segment] = this.operatorConverter(key, params[key]);
                 } else {
                     // Segmento intermediário, criar objeto se não existir
                     if (!currentObj[segment]) {
@@ -161,6 +156,21 @@ export class GetEntityList<T extends EntityFilter> {
         return filterObject;
     };
 
+    private operatorConverter(key: string, value: any) {
+
+        const operator = key.split('$')[1];
+
+        switch (operator) {
+            case 'like':
+                return ILike(`%${value}%`);
+            case 'null':
+                return IsNull();
+                case 'notNull':
+                    return Not(IsNull());
+            default:
+                return key;
+          };
+    };
 
     private getValidRelations(params: { [key: string]: any }): IRelations {
 

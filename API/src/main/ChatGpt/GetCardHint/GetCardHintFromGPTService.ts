@@ -1,9 +1,26 @@
+import { ICard } from "../../../interfaces/Card.model";
 import { CardListService } from "../../Card/CardList/CardListService";
 import { openAi } from "../config/init";
 
 export class GetCardHintFromGPTService {
 
-    async getCardHint(cardName: string) {
+    async getCardHint(card: ICard) {
+
+        let message: string = `Me indique uma carta de pokemon TCG que possua sinergia com a carta ${card.name} `;
+
+        if (card?.abilities) {
+            message += ` que possui a habilidade ${card?.abilities[0].name} e `
+        };
+
+        if (card?.attacks) {
+            let attacks: string = '';
+            card.attacks.forEach((attk) => attacks += `${attk.name}, `)
+            for (const attacks of card?.attacks) {
+                message += ` e que possui os ataques ${attacks}`;
+            };
+        };
+
+        message += `se você nao encontrar informações sobre a carta informada, por gentileza, não de informações erradas e nem falsas, e retorne apenas o texto: "Carta não encontrada!"`
 
         const hint = await openAi.chat.completions.create({
             model: 'gpt-3.5-turbo-16k-0613',
@@ -15,7 +32,7 @@ export class GetCardHintFromGPTService {
             // }],
             messages: [{
                 'role': 'user',
-                content: `De 3 dicas para montar um deck de pokemon TCG que tenha sinergia com a carta: ${cardName}`
+                content: `${message}`
             }]
         });
 

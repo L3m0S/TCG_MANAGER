@@ -5,11 +5,11 @@ export class GetCardHintController {
 
     async getCardHintController(req: Request, res: Response) {
 
-        const { cardName } = req.params;
+        const { cardId } = req.params;
 
         const getCardHintService = new GetCardHintService();
 
-        const hint = await getCardHintService.getCardHint(cardName);
+        const hint = await getCardHintService.getCardHint(cardId);
 
         res.json({ data: hint });
     };

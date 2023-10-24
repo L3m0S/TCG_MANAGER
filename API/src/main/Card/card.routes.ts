@@ -30,7 +30,7 @@ export default (router: Router): void => {
     )
 
     cardRouter.get(
-        '/getCardHint/:cardName',
+        '/getCardHint/:cardId',
         getCardHintController.getCardHintController
     )
 }; 

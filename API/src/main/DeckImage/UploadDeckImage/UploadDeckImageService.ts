@@ -21,6 +21,11 @@ export class UploadDeckImageService {
             throw new ApiError('Deck informado não encontrado!', 404);
         };
 
+        const deckImageExists = await DeckImageRepository.findOneBy({ deck: { id: deckId } });
+
+        if (deckImageExists)
+            throw new ApiError(`Deck já possui uma cover!`, 400);
+
         const uploadImageService = new UploadImageService();
         const uploadedImage = await uploadImageService.uploadImage(this.path, file);
 
