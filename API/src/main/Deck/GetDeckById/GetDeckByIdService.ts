@@ -11,7 +11,7 @@ export class GetDeckByIdService {
         };
 
         const deck = await deckRepository.findOne({
-            where: { id: deckId, deleted: false },
+            where: { id: +deckId, deleted: false },
             relations: ['user']
         });
 
