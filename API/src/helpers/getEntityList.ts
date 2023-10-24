@@ -171,7 +171,7 @@ export class GetEntityList<T extends EntityFilter> {
                 case 'notNull':
                     return Not(IsNull());
             default:
-                return key;
+                return value;
           };
     };
 
