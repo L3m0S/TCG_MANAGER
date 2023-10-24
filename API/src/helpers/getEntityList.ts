@@ -236,20 +236,4 @@ export class GetEntityList<T extends EntityFilter> {
 
         return result;
     };
-
-    private convertParamsOperators(field: string, params?: FindOptionsWhere<T>) {
-
-        let whereOptions: FindOptionsWhere<T> = {}
-
-        const operator = field?.split(`$`)[1];
-        const key = field?.split(`$`)[0]
-
-        // switch (operator) {
-        //     case 'like':
-        //         whereOptions[key] = Like(`%${params[key]}%`)
-        //         break
-        // }
-
-
-    };
 };
