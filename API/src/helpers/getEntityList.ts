@@ -25,6 +25,9 @@ export class GetEntityList<T extends EntityFilter> {
         const page = params?.['page'] ?? 1;
         const pageSize = params?.['pageSize'] ?? 20;
 
+        delete params.page;
+        delete params.pageSize;
+
         const searchParameters = this.getValidSearchParameters(params);
 
         searchParameters.skip = ((+page - 1) * +pageSize);
