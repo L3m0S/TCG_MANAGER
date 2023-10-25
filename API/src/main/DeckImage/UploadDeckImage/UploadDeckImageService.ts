@@ -15,7 +15,7 @@ export class UploadDeckImageService {
         };
 
         const getDeckByIdService = new GetDeckByIdService();
-        const deck = await getDeckByIdService.getDeckById(deckId);
+        const deck = await getDeckByIdService.getDeckById(+deckId);
 
         if (!deck) {
             throw new ApiError('Deck informado não encontrado!', 404);

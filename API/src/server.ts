@@ -24,6 +24,7 @@ server.listen('3333', async () => {
     // await (new InitializeQueues().initializeQueues()).then(() => {
     //     console.log('RabbitMQ queues started!')
     // }).catch((err) => {
+    //     console.log(err)
     //     throw new ApiError(`Error on starting RabbitMQ queues!`, 500);
     // });
     console.log('Server is running on PORT: 3333...');

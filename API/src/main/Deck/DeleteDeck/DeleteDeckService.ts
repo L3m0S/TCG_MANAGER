@@ -17,7 +17,7 @@ export class DeleteDeckService {
 
         const getDeckByIdService = new GetDeckByIdService();
 
-        const deckExists = await getDeckByIdService.getDeckById(deckId);
+        const deckExists = await getDeckByIdService.getDeckById(+deckId);
 
         if (!deckExists) {
             throw new ApiError(`Deck informado não foi encontrado!`, 400);

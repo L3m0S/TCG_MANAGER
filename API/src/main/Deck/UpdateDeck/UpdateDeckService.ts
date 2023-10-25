@@ -18,7 +18,7 @@ export class UpdateDeckService {
 
         const getDeckService = new GetDeckByIdService();
 
-        const deckExists = await getDeckService.getDeckById(deck.id);
+        const deckExists = await getDeckService.getDeckById(+deck.id);
 
         if (!deckExists) {
             throw new ApiError(`Deck com o ID informado não foi encontrado!`, 404);
