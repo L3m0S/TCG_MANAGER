@@ -18,7 +18,7 @@ export default (router: Router): void => {
     const UserRouter = Router();
     router.use('/user', UserRouter);
 
-    UserRouter.get(
+    UserRouter.post(
         "/login",
         authenticateUser.authenticateUser
     );
