@@ -5,7 +5,7 @@ import { ICard } from "../../../interfaces/Card.model";
 
 
 export class GetCardByIdService {
-    async getCardById(id: string): Promise<ICard> {
+    async getCardById(id: string): Promise<any> {
         if (!id) {
             throw new ApiError('ID não valido!', 403);
         }
@@ -18,6 +18,8 @@ export class GetCardByIdService {
                 `${apiConfig.url}/cards/${id}`
             )).data;
         } catch (err: any) {
+            if (err?.response?.status === 404)
+                throw new ApiError(`Carta com ID ${id} não encontrada!`, err.response?.status);
             throw new ApiError(err.message, err.response?.status);
         };
 

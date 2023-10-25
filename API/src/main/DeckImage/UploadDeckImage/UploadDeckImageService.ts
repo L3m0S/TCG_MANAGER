@@ -8,7 +8,7 @@ import { DeckImageRepository } from "../DeckImageRepository";
 export class UploadDeckImageService {
     public path = 'deck/deck-images';
 
-    async uploadImage(file: any, deckId: number) {
+    async uploadImage(file: any, deckId: number, cardId?: string) {
 
         if (!deckId) {
             throw new ApiError('Informe o deck vinculado a imagem!', 400);
@@ -26,14 +26,18 @@ export class UploadDeckImageService {
         if (deckImageExists)
             throw new ApiError(`Deck já possui uma cover!`, 400);
 
-        const uploadImageService = new UploadImageService();
-        const uploadedImage = await uploadImageService.uploadImage(this.path, file);
-
         const image = new DeckImage();
-        image.url = uploadedImage.url;
-        image.deck = deck;
-        image.name = uploadedImage?.fileName;
-        image.original_name = file?.originalName;
+        if (cardId) {
+            image.deck = deck;
+            image.card_id = cardId;
+        } else {
+            const uploadImageService = new UploadImageService();
+            const uploadedImage = await uploadImageService.uploadImage(this.path, file);
+            image.url = uploadedImage.url;
+            image.deck = deck;
+            image.name = uploadedImage?.fileName;
+            image.original_name = file?.originalName;
+        };
 
         const deckImage = await DeckImageRepository.save(image);
 
